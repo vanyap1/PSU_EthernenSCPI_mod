@@ -89,12 +89,27 @@ libs/driver/hw_driver.d libs/driver/hw_driver.o: \
  ../hal/include/hpl_spi_sync.h ../hal/include/hal_i2c_m_sync.h \
  ../hal/include/hpl_i2c_m_sync.h ../hal/include/hal_usart_sync.h \
  ../hal/include/hal_io.h ../hal/include/hpl_usart_sync.h \
- ../hal/include/hpl_usart.h ../hal/include/hal_pwm.h \
- ../hal/include/hpl_pwm.h ../hal/include/hpl_irq.h \
- ../hpl/tc/hpl_tc_base.h ../hal/include/hpl_timer.h \
+ ../hal/include/hpl_usart.h ../hal/include/hal_timer.h \
+ ../hal/utils/include/utils_list.h ../hal/include/hpl_timer.h \
+ ../hal/include/hal_pwm.h ../hal/include/hpl_pwm.h \
+ ../hal/include/hpl_irq.h ../hpl/tc/hpl_tc_base.h \
  ../Config/peripheral_clk_config.h ../hpl/gclk/hpl_gclk_base.h \
  ../hpl/pm/hpl_pm_base.h ../hpl/adc/hpl_adc_base.h \
- ../hal/include/hpl_adc_async.h ../hal/include/hpl_adc_sync.h
+ ../hal/include/hpl_adc_async.h ../hal/include/hpl_adc_sync.h \
+ ../hpl/rtc/hpl_rtc_base.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_ansi.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\newlib.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\config.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\ieeefp.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\reent.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_ansi.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_types.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_types.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\lock.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\cdefs.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\xlocale.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h
 
 ../libs/driver/hw_driver.h:
 
@@ -334,6 +349,12 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD20_DFP\1.3.165\samd20\
 
 ../hal/include/hpl_usart.h:
 
+../hal/include/hal_timer.h:
+
+../hal/utils/include/utils_list.h:
+
+../hal/include/hpl_timer.h:
+
 ../hal/include/hal_pwm.h:
 
 ../hal/include/hpl_pwm.h:
@@ -341,8 +362,6 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD20_DFP\1.3.165\samd20\
 ../hal/include/hpl_irq.h:
 
 ../hpl/tc/hpl_tc_base.h:
-
-../hal/include/hpl_timer.h:
 
 ../Config/peripheral_clk_config.h:
 
@@ -355,3 +374,31 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD20_DFP\1.3.165\samd20\
 ../hal/include/hpl_adc_async.h:
 
 ../hal/include/hpl_adc_sync.h:
+
+../hpl/rtc/hpl_rtc_base.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_ansi.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\newlib.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\config.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\ieeefp.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\reent.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_ansi.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_types.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\_types.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\lock.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\cdefs.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\xlocale.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h:

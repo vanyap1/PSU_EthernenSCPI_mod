@@ -192,10 +192,10 @@ drivers:
     functionality: System
     api: HAL:HPL:GCLK
     configuration:
-      $input: 48000000
-      $input_id: Digital Frequency Locked Loop (DFLL48M)
-      RESERVED_InputFreq: 48000000
-      RESERVED_InputFreq_id: Digital Frequency Locked Loop (DFLL48M)
+      $input: 400000
+      $input_id: External Crystal Oscillator 0.4-32MHz (XOSC)
+      RESERVED_InputFreq: 400000
+      RESERVED_InputFreq_id: External Crystal Oscillator 0.4-32MHz (XOSC)
       _$freq_output_Generic clock generator 0: 48000000
       _$freq_output_Generic clock generator 1: 1000000
       _$freq_output_Generic clock generator 2: 400000
@@ -485,6 +485,37 @@ drivers:
         configuration:
           core_gclk_selection: Generic clock generator 0
           slow_gclk_selection: Generic clock generator 3
+  TIMER_0:
+    user_label: TIMER_0
+    definition: Atmel:SAMD20_Drivers:0.0.1::SAMD20J18A-AN::RTC::driver_config_definition::Timer::HAL:Driver:Timer
+    functionality: Timer
+    api: HAL:Driver:Timer
+    configuration:
+      rtc_arch_comp_val: 10
+      rtc_arch_init_reset: true
+      rtc_arch_prescaler: Peripheral clock divided by 1
+      rtc_cmpeo0: false
+      rtc_event_control: false
+      rtc_ovfeo: false
+      rtc_pereo0: false
+      rtc_pereo1: false
+      rtc_pereo2: false
+      rtc_pereo3: false
+      rtc_pereo4: false
+      rtc_pereo5: false
+      rtc_pereo6: false
+      rtc_pereo7: false
+    optional_signals: []
+    variant: null
+    clocks:
+      domain_group:
+        nodes:
+        - name: RTC
+          input: Generic clock generator 3
+          external: false
+          external_frequency: 0
+        configuration:
+          rtc_clk_selection: Generic clock generator 3
   PWM_0:
     user_label: PWM_0
     definition: Atmel:SAMD20_Drivers:0.0.1::SAMD20J18A-AN::TC6::driver_config_definition::PWM::HAL:Driver:PWM

@@ -6,6 +6,8 @@
 #include <hpl_pm_base.h>
 
 #include <hpl_adc_base.h>
+#include <hpl_rtc_base.h>
+#include <string.h>
 
 struct spi_m_sync_descriptor ETH_SPI;
 struct spi_m_sync_descriptor EXT_SPI;
@@ -15,6 +17,9 @@ struct pwm_descriptor PWM_0;
 struct pwm_descriptor PWM_1;
 
 struct usart_sync_descriptor DEBUG_SERIAL;
+struct timer_descriptor TIMER_IRQ;
+
+static struct timer_task TIMER_task1, TIMER_task2;
 
 struct io_descriptor *eth_spi;
 struct io_descriptor *ext_spi;
@@ -25,7 +30,7 @@ void mcu_init(void)
 {
 	init_mcu();
 	gpio_init();
-	ADC_0_init();
+	ADC_init();
 	
 	ETH_SPI_init();
 	EXT_SPI_init();
@@ -34,6 +39,9 @@ void mcu_init(void)
 	DEBUG_Serial_init();
 	
 	ext_irq_register(ETH_INT, ETH_Handler);
+	
+	TIMER_IRQ_init();
+	EXT_IRG_init();
 }
 
 static void ETH_Handler(void){
@@ -271,6 +279,7 @@ bool I2C_read_batch(uint8_t addres ,uint8_t *data, uint8_t data_len){
 bool I2C_read_batch_addr(uint8_t addres, uint8_t reg, uint8_t *data, uint8_t data_len){
 	i2c_m_sync_set_slaveaddr(&EXT_I2C, addres, I2C_M_SEVEN);
 	i2c_m_sync_cmd_read(&EXT_I2C, reg, data, data_len);
+	return true;
 }
 
 void PWM_init(void){
@@ -299,6 +308,9 @@ void PWM_write(uint8_t ch, uint16_t val){
 	}	
 }
 
+void ADC_init(){
+
+}
 
 void DEBUG_Serial_init(void){
 	_pm_enable_bus_clock(PM_BUS_APBC, SERCOM4);
@@ -314,7 +326,7 @@ void DEBUG_Serial_init(void){
 }
 
 void SerialWrite(uint8_t* buff){
-	io_write(debug_serial, buff, strlen(buff));
+	io_write(debug_serial, buff, strlen((char *)buff));
 	//io_write(debug_serial, (uint8_t *)"Hello World!", 12);
 }
 
@@ -326,4 +338,35 @@ uint8_t GetIpSwitch(void){
 	res |= (gpio_get_pin_level(IP_B3) << 3);
 	
 	return res;
+}
+
+static void TIMER_0_task1_cb(const struct timer_task *const timer_task)
+{
+	
+}
+
+static void TIMER_0_task2_cb(const struct timer_task *const timer_task)
+{
+	gpio_toggle_pin_level(GLD);
+}
+
+
+
+static void TIMER_IRQ_init(void)
+{
+	_pm_enable_bus_clock(PM_BUS_APBA, RTC);
+	_gclk_enable_channel(RTC_GCLK_ID, CONF_GCLK_RTC_SRC);
+	timer_init(&TIMER_IRQ, RTC, _rtc_get_timer());
+	
+	//TIMER_task1.interval = 100;
+	//TIMER_task1.cb       = TIMER_0_task1_cb;
+	//TIMER_task1.mode     = TIMER_TASK_REPEAT;
+	
+	TIMER_task2.interval = 32768/2;
+	TIMER_task2.cb       = TIMER_0_task2_cb;
+	TIMER_task2.mode     = TIMER_TASK_REPEAT;
+
+	//timer_add_task(&TIMER_IRQ, &TIMER_task1);
+	timer_add_task(&TIMER_IRQ, &TIMER_task2);
+	timer_start(&TIMER_IRQ);
 }

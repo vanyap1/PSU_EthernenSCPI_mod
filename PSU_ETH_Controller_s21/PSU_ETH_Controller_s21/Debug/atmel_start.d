@@ -88,9 +88,10 @@ atmel_start.d atmel_start.o: .././atmel_start.c ../atmel_start.h \
  ../hal/include/hpl_spi_sync.h ../hal/include/hal_i2c_m_sync.h \
  ../hal/include/hpl_i2c_m_sync.h ../hal/include/hal_usart_sync.h \
  ../hal/include/hal_io.h ../hal/include/hpl_usart_sync.h \
- ../hal/include/hpl_usart.h ../hal/include/hal_pwm.h \
- ../hal/include/hpl_pwm.h ../hal/include/hpl_irq.h \
- ../hpl/tc/hpl_tc_base.h ../hal/include/hpl_timer.h
+ ../hal/include/hpl_usart.h ../hal/include/hal_timer.h \
+ ../hal/utils/include/utils_list.h ../hal/include/hpl_timer.h \
+ ../hal/include/hal_pwm.h ../hal/include/hpl_pwm.h \
+ ../hal/include/hpl_irq.h ../hpl/tc/hpl_tc_base.h
 
 ../atmel_start.h:
 
@@ -332,6 +333,12 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD20_DFP\1.3.165\samd20\
 
 ../hal/include/hpl_usart.h:
 
+../hal/include/hal_timer.h:
+
+../hal/utils/include/utils_list.h:
+
+../hal/include/hpl_timer.h:
+
 ../hal/include/hal_pwm.h:
 
 ../hal/include/hpl_pwm.h:
@@ -339,5 +346,3 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD20_DFP\1.3.165\samd20\
 ../hal/include/hpl_irq.h:
 
 ../hpl/tc/hpl_tc_base.h:
-
-../hal/include/hpl_timer.h:

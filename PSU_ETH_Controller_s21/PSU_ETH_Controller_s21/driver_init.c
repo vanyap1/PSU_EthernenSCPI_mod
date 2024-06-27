@@ -14,9 +14,11 @@
 #include <hpl_pm_base.h>
 
 #include <hpl_adc_base.h>
+#include <hpl_rtc_base.h>
 
 struct spi_m_sync_descriptor SPI_0;
 struct spi_m_sync_descriptor SPI_1;
+struct timer_descriptor      TIMER_0;
 
 struct adc_sync_descriptor ADC_0;
 
@@ -79,25 +81,25 @@ void SPI_0_PORT_init(void)
 {
 
 	gpio_set_pin_level(MOSI,
-	                   
-	                   
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
 	                   false);
 
-	
+	// Set pin direction to output
 	gpio_set_pin_direction(MOSI, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_function(MOSI, PINMUX_PA04D_SERCOM0_PAD0);
 
 	gpio_set_pin_level(SCK,
-	                   
-	                   
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
 	                   false);
 
-	
+	// Set pin direction to output
 	gpio_set_pin_direction(SCK, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_function(SCK, PINMUX_PA05D_SERCOM0_PAD1);
@@ -171,25 +173,25 @@ void SPI_1_PORT_init(void)
 {
 
 	gpio_set_pin_level(PA16,
-	                   
-	                   
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
 	                   false);
 
-	
+	// Set pin direction to output
 	gpio_set_pin_direction(PA16, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_function(PA16, PINMUX_PA16D_SERCOM3_PAD0);
 
 	gpio_set_pin_level(PA17,
-	                   
-	                   
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
 	                   false);
 
-	
+	// Set pin direction to output
 	gpio_set_pin_direction(PA17, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_function(PA17, PINMUX_PA17D_SERCOM3_PAD1);
@@ -242,6 +244,18 @@ void USART_0_init(void)
 	USART_0_PORT_init();
 }
 
+/**
+ * \brief Timer initialization function
+ *
+ * Enables Timer peripheral, clocks and initializes Timer driver
+ */
+static void TIMER_0_init(void)
+{
+	_pm_enable_bus_clock(PM_BUS_APBA, RTC);
+	_gclk_enable_channel(RTC_GCLK_ID, CONF_GCLK_RTC_SRC);
+	timer_init(&TIMER_0, RTC, _rtc_get_timer());
+}
+
 void PWM_0_PORT_init(void)
 {
 
@@ -287,13 +301,13 @@ void system_init(void)
 	// GPIO on PA07
 
 	gpio_set_pin_level(ETH_CS,
-	                   
-	                   
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
 	                   true);
 
-	
+	// Set pin direction to output
 	gpio_set_pin_direction(ETH_CS, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_function(ETH_CS, GPIO_PIN_FUNCTION_OFF);
@@ -301,13 +315,13 @@ void system_init(void)
 	// GPIO on PA08
 
 	gpio_set_pin_level(O2,
-	                   
-	                   
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
 	                   false);
 
-	
+	// Set pin direction to output
 	gpio_set_pin_direction(O2, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_function(O2, GPIO_PIN_FUNCTION_OFF);
@@ -315,13 +329,13 @@ void system_init(void)
 	// GPIO on PA09
 
 	gpio_set_pin_level(O3,
-	                   
-	                   
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
 	                   false);
 
-	
+	// Set pin direction to output
 	gpio_set_pin_direction(O3, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_function(O3, GPIO_PIN_FUNCTION_OFF);
@@ -329,13 +343,13 @@ void system_init(void)
 	// GPIO on PA10
 
 	gpio_set_pin_level(O1,
-	                   
-	                   
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
 	                   false);
 
-	
+	// Set pin direction to output
 	gpio_set_pin_direction(O1, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_function(O1, GPIO_PIN_FUNCTION_OFF);
@@ -358,13 +372,13 @@ void system_init(void)
 	// GPIO on PA15
 
 	gpio_set_pin_level(CS2,
-	                   
-	                   
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
 	                   true);
 
-	
+	// Set pin direction to output
 	gpio_set_pin_direction(CS2, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_function(CS2, GPIO_PIN_FUNCTION_OFF);
@@ -372,13 +386,13 @@ void system_init(void)
 	// GPIO on PA23
 
 	gpio_set_pin_level(GLD,
-	                   
-	                   
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
 	                   false);
 
-	
+	// Set pin direction to output
 	gpio_set_pin_direction(GLD, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_function(GLD, GPIO_PIN_FUNCTION_OFF);
@@ -386,13 +400,13 @@ void system_init(void)
 	// GPIO on PB09
 
 	gpio_set_pin_level(SPI_RST,
-	                   
-	                   
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
 	                   false);
 
-	
+	// Set pin direction to output
 	gpio_set_pin_direction(SPI_RST, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_function(SPI_RST, GPIO_PIN_FUNCTION_OFF);
@@ -437,6 +451,8 @@ void system_init(void)
 	SPI_1_init();
 
 	USART_0_init();
+
+	TIMER_0_init();
 
 	PWM_0_init();
 

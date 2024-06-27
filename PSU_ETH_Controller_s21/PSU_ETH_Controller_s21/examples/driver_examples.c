@@ -87,6 +87,32 @@ void USART_0_example(void)
 	io_write(io, (uint8_t *)"Hello World!", 12);
 }
 
+static struct timer_task TIMER_task1, TIMER_task2;
+/**
+ * Example of using TIMER_0.
+ */
+static void TIMER_0_task1_cb(const struct timer_task *const timer_task)
+{
+}
+
+static void TIMER_0_task2_cb(const struct timer_task *const timer_task)
+{
+}
+
+void TIMER_0_example(void)
+{
+	TIMER_task1.interval = 100;
+	TIMER_task1.cb       = TIMER_0_task1_cb;
+	TIMER_task1.mode     = TIMER_TASK_REPEAT;
+	TIMER_task2.interval = 200;
+	TIMER_task2.cb       = TIMER_0_task2_cb;
+	TIMER_task2.mode     = TIMER_TASK_REPEAT;
+
+	timer_add_task(&TIMER_0, &TIMER_task1);
+	timer_add_task(&TIMER_0, &TIMER_task2);
+	timer_start(&TIMER_0);
+}
+
 /**
  * Example of using PWM_0.
  */

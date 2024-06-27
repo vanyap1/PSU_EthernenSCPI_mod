@@ -23,6 +23,7 @@ extern "C" {
 #include <hal_spi_m_sync.h>
 
 #include <hal_usart_sync.h>
+#include <hal_timer.h>
 #include <hal_pwm.h>
 #include <hpl_tc_base.h>
 #include <hal_pwm.h>
@@ -32,6 +33,7 @@ extern struct spi_m_sync_descriptor EXT_SPI;
 extern struct spi_m_sync_descriptor ETH_SPI;
 extern struct i2c_m_sync_desc EXT_I2C;
 extern struct usart_sync_descriptor DEBUG_SERIAL;
+extern struct timer_descriptor      TIMER_IRQ;
 
 extern struct pwm_descriptor PWM_0;
 extern struct pwm_descriptor PWM_1;
@@ -69,10 +71,18 @@ bool I2C_read_batch_addr(uint8_t addres, uint8_t reg, uint8_t *data, uint8_t dat
 void PWM_init(void);
 void PWM_write(uint8_t ch, uint16_t val);
 
+void ADC_init(void);
+
 void DEBUG_Serial_init(void);
 void SerialWrite(uint8_t* buff);
 
 uint8_t GetIpSwitch(void);
+
+static void TIMER_0_task1_cb(const struct timer_task *const timer_task);
+static void TIMER_0_task2_cb(const struct timer_task *const timer_task);
+
+static void TIMER_IRQ_init(void);
+
 #endif	
 	
 	

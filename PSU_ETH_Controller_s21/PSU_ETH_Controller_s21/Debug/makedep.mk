@@ -34,6 +34,8 @@ hal\src\hal_sleep.c
 
 hal\src\hal_spi_m_sync.c
 
+hal\src\hal_timer.c
+
 hal\src\hal_usart_sync.c
 
 hal\utils\src\utils_assert.c
@@ -55,6 +57,8 @@ hpl\eic\hpl_eic.c
 hpl\gclk\hpl_gclk.c
 
 hpl\pm\hpl_pm.c
+
+hpl\rtc\hpl_rtc.c
 
 hpl\sercom\hpl_sercom.c
 
