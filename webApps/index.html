@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Power Supply Control</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 400px;
+            width: 100%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .row, .input-row, .preset-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .row label, .input-row label, .preset-row label {
+            flex: 1;
+        }
+        .row input, .input-row input, .preset-row input {
+            width: 100px;
+            text-align: center;
+        }
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button {
+            width: 48%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        .preset-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .preset-button {
+            width: 32%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .preset-button:hover {
+            background: #218838;
+        }
+        .separator {
+            width: 100%;
+            height: 1px;
+            background: #ddd;
+            margin: 20px 0;
+        }
+        .row .spaced-input {
+            margin-left: 10px;
+        }
+        .status-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ccc; /* Default to gray */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Power Supply Control</h1>
+        <div class="row">
+            <label>Preset Amp / DMM:</label>
+            <input type="text" id="amp-set" readonly class="spaced-input"> 
+            <input type="text" id="amp-dmm" readonly class="spaced-input">
+        </div>
+        <div class="row">
+            <label>Preset Volt / DMM:</label>
+            <input type="text" id="volt-set" readonly class="spaced-input"> 
+            <input type="text" id="volt-dmm" readonly class="spaced-input">
+        </div>
+        <div class="row">
+            <label>Watt - Watt DMM:</label>
+            <input type="text" id="watt-display" readonly>
+        </div>
+        <div class="input-row">
+            <label for="amp-input">Set New Amp:</label>
+            <input type="text" id="amp-input">
+        </div>
+        <div class="input-row">
+            <label for="volt-input">Set New Volt:</label>
+            <input type="text" id="volt-input">
+        </div>
+        <div class="button-row">
+            <div class="status-indicator" id="status-indicator"></div>
+            <button class="button" style="margin-left: auto;" onclick="setValues()">Set Values</button>
+        </div>
+        <div class="button-row">
+            <button class="button" onclick="controlDevice('psu','on')">Turn PSU On</button>
+            <button class="button" onclick="controlDevice('psu','off')">Turn PSU Off</button>
+        </div>
+        <div class="separator"></div>
+        <div class="button-row">
+            <button class="button" onclick="controlDevice('fan','on')">Turn Fan On</button>
+            <button class="button" onclick="controlDevice('fan','off')">Turn Fan Off</button>
+        </div>
+        <div class="separator"></div>
+        <div class="preset-row">
+            <button class="preset-button" onclick="setPreset(1)">5V 1A</button>
+            <button class="preset-button" onclick="setPreset(2)">12V 2A</button>
+            <button class="preset-button" onclick="setPreset(3)">24V 2A</button>
+        </div>
+    </div>
+    <script>
+        function fetchValues() {
+            fetch('/get_vals')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('amp-set').value = data.amp.toFixed(2);
+                    document.getElementById('volt-set').value = data.volt.toFixed(2);
+                    document.getElementById('watt-display').value = data.watt.toFixed(2);
+                    document.getElementById('amp-dmm').value = data.ampDMM.toFixed(2);
+                    document.getElementById('volt-dmm').value = data.voltDMM.toFixed(2);
+
+                    // Update the status indicator color based on outState
+                    const statusIndicator = document.getElementById('status-indicator');
+                    if (data.outState === 0) {
+                        statusIndicator.style.background = '#ccc'; // gray
+                    } else if (data.outState === 1) {
+                        statusIndicator.style.background = '#28a745'; // green
+                    } else if (data.outState === 2) {
+                        statusIndicator.style.background = '#dc3545'; // red
+                    }
+                })
+                .catch(error => console.error('Error fetching values:', error));
+        }
+
+        function setValues() {
+            const amp = parseFloat(document.getElementById('amp-input').value);
+            const volt = parseFloat(document.getElementById('volt-input').value);
+            fetch(`/set_vals?amp=${amp}&volt=${volt}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        fetchValues();
+                    } else {
+                        alert('Error setting values');
+                    }
+                })
+                .catch(error => console.error('Error setting values:', error));
+        }
+
+        function controlDevice(device, action) {
+            fetch(`/control?device=${device}&action=${action}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(`${device.toUpperCase()} ${action.toUpperCase()} Successful`);
+                    } else {
+                        alert(`Error ${action}ing ${device}`);
+                    }
+                })
+                .catch(error => console.error(`Error ${action}ing ${device}:`, error));
+        }
+
+        function setPreset(preset) {
+            let amp, volt;
+            if (preset == 1) {
+                amp = 1.25;
+                volt = 5.3;
+            } else if (preset == 2) {
+                amp = 2.0;
+                volt = 12.0;
+            } else if (preset == 3) {
+                amp = 2.0;
+                volt = 24.0;
+            }
+            document.getElementById('amp-input').value = amp;
+            document.getElementById('volt-input').value = volt;
+            setValues();
+        }
+
+        setInterval(fetchValues, 1000);
+    </script>
+</body>
+</html>

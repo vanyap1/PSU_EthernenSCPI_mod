@@ -48,6 +48,12 @@ static void ETH_Handler(void){
 
 }
 
+void buzer(uint16_t soundTime){
+	gpio_set_pin_level(BZ, true);
+	delay_ms(soundTime);
+	gpio_set_pin_level(BZ, false);
+}
+
 void gpio_init(void){
 	// GPIO on PA07
 	gpio_set_pin_level(ETH_CS, true);

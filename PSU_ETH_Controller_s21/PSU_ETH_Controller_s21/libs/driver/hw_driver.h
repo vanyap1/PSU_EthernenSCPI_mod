@@ -42,6 +42,7 @@ extern struct pwm_descriptor PWM_1;
 
 void mcu_init(void);
 static void ETH_Handler(void);
+void buzer(uint16_t soundTime);
 void gpio_init(void);	
 void EXT_IRG_init(void);
 
