@@ -3,6 +3,14 @@
 #include "hw_driver.h"
 #include "socket.h"
 #include "http_parser.h"
+#include "indexPage.h"
+
+#include "stdint.h"
+#include "string.h"
+#include "stdbool.h"
+#include <stdio.h>
+#include <stdlib.h>
+
 
 
 uint8_t *testBuffer 	= "Wiznet Says Hi!\n\r";
@@ -21,6 +29,11 @@ uint16_t UdpTxPort			= 3000;
 uint8_t	 UdpTxSockNum			= 0;
 uint16_t UdpRxPort			= 3001;
 uint8_t	 UdpRxSockNum			= 1;
+
+float amp = 0, volt = 0;
+
+
+
 
 
 
@@ -101,75 +114,92 @@ int main(void)
 		}
 	}
 	
-	for(uint8_t HTTP_SOCKET = 3; HTTP_SOCKET <= 7; HTTP_SOCKET++){
-		if(getSn_SR(HTTP_SOCKET) == SOCK_ESTABLISHED){
+	
+	for(uint8_t HTTP_SOCKET = 3; HTTP_SOCKET <= 7; HTTP_SOCKET++) {
+		if (getSn_SR(HTTP_SOCKET) == SOCK_ESTABLISHED) {
 			uint8_t rIP[4];
 			getsockopt(HTTP_SOCKET, SO_DESTIP, rIP);
-				
 			uint16_t res_size = getSn_RX_RSR(HTTP_SOCKET);
-			if (res_size > sizeof(TCP_RX_BUF)){
+			if (res_size > sizeof(TCP_RX_BUF)) {
 				res_size = sizeof(TCP_RX_BUF);
-				}
-				
-			memset(TCP_RX_BUF, 0, sizeof(DATA_BUFF_SIZE));
-			sprintf(http_ansver ,"<p><span style=\"color: #00ff00;\"><strong>data</strong></span></p>\n\r");
-			send(HTTP_SOCKET, (uint8_t*)http_ansver, strlen(http_ansver));    //Uncomment for TCP
+			}
+
+			memset(TCP_RX_BUF, 0, sizeof(TCP_RX_BUF));
 			recv(HTTP_SOCKET, (uint8_t*)TCP_RX_BUF, res_size);
-						
-			//if(res_size != 0){ // Actual for telnet connection
-			//send(HTTP_SOCKET, (uint8_t*)http_ansver, strlen(http_ansver));
-			//}
-			//uint8_t result;
-			//result = socket(UdpTxSockNum, Sn_MR_UDP, UdpTxPort, SF_IO_NONBLOCK);
-			//result = sendto(UdpTxSockNum, TCP_RX_BUF, res_size, UdpDestAddress, UdpTxPort);
-						
-			sprintf(http_ansver, "SOCKET NUM: %d;<br>RTC: %02d:%02d:%02d; \nRead bytes: %d<br>" , HTTP_SOCKET, 12, 11, 25,res_size);
-			send(HTTP_SOCKET, (uint8_t*)http_ansver, strlen(http_ansver));	//Uncomment for TCP
-			sprintf(http_ansver ,"IP:%d.%d.%d.%d<br>", rIP[0],rIP[1],rIP[2],rIP[3]);
-			send(HTTP_SOCKET, (uint8_t*)http_ansver, strlen(http_ansver));	//Uncomment for TCP
-					
-			//send(HTTP_SOCKET, (uint8_t*)TCP_RX_BUF, strlen(TCP_RX_BUF));		//Uncomment for TCP
-						
-			char *get_request = strtok(TCP_RX_BUF, "\r");
-			//if(strstr(get_request, "GET") != NULL && strstr(get_request, "favicon") == NULL){
-			//uint16_t index = position - get_request;
-			//printf("IP:%d.%d.%d.%d\r\n", rIP[0],rIP[1],rIP[2],rIP[3]);
-			//printf("%s\n\r",get_request);
-			//
-			//int value;
-			//if(extractValue(get_request,"value1", &value)){
-			//printf("value1 = %d\n\r", value);
-			//}
-			//
-			//if(extractValue(get_request,"value2", &value)){
-				//printf("value2 = %d\n\r", value);
-				//}
-				//char valueStr[20];
-			//if(extractString(get_request,"time", valueStr)){
-				//printf("time = %s\n\r", valueStr);
-				//sscanf(valueStr, "%hhu:%hhu:%hhu", &sys_rtc.hour, &sys_rtc.minute, &sys_rtc.second);
-				//rtc_set(&sys_rtc);
-				//}
-			//if(extractString(get_request,"help", valueStr)){
-				//send(HTTP_SOCKET, (uint8_t*)TCP_RX_BUF, strlen(TCP_RX_BUF));
-				//}
-			//sprintf(http_ansver ,"HTTP/1.0 200 OK\n\r");
-			//send(HTTP_SOCKET, (uint8_t*)http_ansver, strlen(http_ansver));
-			//}
-				
-			disconnect(HTTP_SOCKET);			//Uncomment for TCP
-			close(HTTP_SOCKET);
-			}
-					
-			if(getSn_SR(HTTP_SOCKET) == SOCK_CLOSE_WAIT){
-				disconnect(HTTP_SOCKET);
-				//close(HTTP_SOCKET);
-			}
-					
-			if(getSn_SR(HTTP_SOCKET) == SOCK_CLOSED){
-				socket(HTTP_SOCKET, Sn_MR_TCP, socketPort[HTTP_SOCKET], 0);
-				listen(HTTP_SOCKET);				
+
+			if (strstr((char*)TCP_RX_BUF, "GET / ") != NULL) {
+				//send(HTTP_SOCKET, (uint8_t*)html_page, strlen(html_page));
+				size_t total_length = strlen(psu_page);
+				size_t sent_length = 0;
+
+				while (sent_length < total_length) {
+					size_t chunk_size = total_length - sent_length > 1024 ? 1024 : total_length - sent_length;
+					send(HTTP_SOCKET, (uint8_t*)(psu_page + sent_length), chunk_size);
+					delay_ms(20);
+					sent_length += chunk_size;
 				}
-			}
+				
+				
+				
+				
+				} else if (strstr((char*)TCP_RX_BUF, "GET /set_vals") != NULL) {
+				char *query_string = strstr((char*)TCP_RX_BUF, "GET /set_vals") + strlen("GET /set_vals?");
+				// Обробка параметрів запиту
+				
+				sscanf(query_string, "amp=%f&volt=%f", &amp, &volt);
+				// Тут додайте код для встановлення значень ампер, вольт та ват
+				send(HTTP_SOCKET, (uint8_t*)"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{\"success\":true}", 65);
+				} else if (strstr((char*)TCP_RX_BUF, "GET /control") != NULL) {
+				char *query_string = strstr((char*)TCP_RX_BUF, "GET /control") + strlen("GET /control?");
+				char device[10], action[10];
+				
+				sscanf(query_string, "device=%[^&]&action=%s", device, action);
+
+				if (strcmp(device, "fan") == 0) {
+					if (strcmp(action, "on") == 0) {
+							gpio_set_pin_level(O2, true);
+							gpio_set_pin_level(O3, true);
+						} else if (strcmp(action, "off") == 0) {
+							gpio_set_pin_level(O2, false);
+							gpio_set_pin_level(O3, false);
+					}
+					} else if (strcmp(device, "psu") == 0) {
+					if (strcmp(action, "on") == 0) {
+						// Код для включення блоку живлення
+						} else if (strcmp(action, "off") == 0) {
+						// Код для виключення блоку живлення
+					}
+				}
+				send(HTTP_SOCKET, (uint8_t*)"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{\"success\":true}", 65);
+				} else if (strstr((char*)TCP_RX_BUF, "GET /get_vals") != NULL) {
+				
+				float watt = amp * volt;
+
+				char json_response[128];
+				int len = snprintf(json_response, sizeof(json_response),
+				"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n"
+				"{\"amp\":%.2f,\"volt\":%.2f,\"watt\":%.2f}", amp, volt, watt);
+
+				send(HTTP_SOCKET, (uint8_t*)json_response, strlen(json_response));
+				
+				}
+
+			disconnect(HTTP_SOCKET);
+			close(HTTP_SOCKET);
 		}
+
+		if (getSn_SR(HTTP_SOCKET) == SOCK_CLOSE_WAIT) {
+			disconnect(HTTP_SOCKET);
+		}
+
+		if (getSn_SR(HTTP_SOCKET) == SOCK_CLOSED) {
+			socket(HTTP_SOCKET, Sn_MR_TCP, socketPort[HTTP_SOCKET], 0);
+			listen(HTTP_SOCKET);
+		}
+	}
+	
+	
+	
+	
+	}
 }
