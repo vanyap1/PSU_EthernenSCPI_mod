@@ -4,7 +4,6 @@
 #include <hal_init.h>
 #include <hpl_gclk_base.h>
 #include <hpl_pm_base.h>
-
 #include <hpl_adc_base.h>
 #include <hpl_rtc_base.h>
 #include <string.h>
@@ -25,6 +24,9 @@ struct io_descriptor *eth_spi;
 struct io_descriptor *ext_spi;
 struct io_descriptor *ext_i2c;
 struct io_descriptor *debug_serial;
+
+uint8_t adcConversionRequest = 0;
+
 
 void mcu_init(void)
 {
@@ -273,14 +275,14 @@ void EXT_I2C_init(void){
 
 bool I2C_write_batch(uint8_t addres, uint8_t *data, uint8_t data_len){
 	i2c_m_sync_set_slaveaddr(&EXT_I2C, addres, I2C_M_SEVEN);
-	//i2c_m_sync_cmd_write(&EXT_I2C, 0x00, data, data_len);
+	i2c_m_sync_cmd_write(&EXT_I2C, 0x00, data, data_len);
 	return (io_write(ext_i2c, (uint8_t *)data, data_len) >= 0) ? true : false;
 }
 
-bool I2C_read_batch(uint8_t addres ,uint8_t *data, uint8_t data_len){
+bool I2C_read_batch(uint8_t addres, uint8_t reg ,uint8_t *data, uint8_t data_len){
 	i2c_m_sync_set_slaveaddr(&EXT_I2C, addres, I2C_M_SEVEN);
-	i2c_m_sync_cmd_read(&EXT_I2C, 0x00, data, data_len);
-	return (io_read(ext_i2c, (uint8_t *)data, data_len) >= 0) ? true : false;
+	i2c_m_sync_cmd_read(&EXT_I2C, reg, data, data_len);
+	//return (io_read(ext_i2c, (uint8_t *)data, data_len) >= 0) ? true : false;
 }
 bool I2C_read_batch_addr(uint8_t addres, uint8_t reg, uint8_t *data, uint8_t data_len){
 	i2c_m_sync_set_slaveaddr(&EXT_I2C, addres, I2C_M_SEVEN);
@@ -318,6 +320,8 @@ void ADC_init(){
 
 }
 
+
+
 void DEBUG_Serial_init(void){
 	_pm_enable_bus_clock(PM_BUS_APBC, SERCOM4);
 	_gclk_enable_channel(SERCOM4_GCLK_ID_CORE, CONF_GCLK_SERCOM4_CORE_SRC);
@@ -328,6 +332,7 @@ void DEBUG_Serial_init(void){
 	gpio_set_pin_function(PB14, PINMUX_PB14C_SERCOM4_PAD2);
 	
 	usart_sync_get_io_descriptor(&DEBUG_SERIAL, &debug_serial);
+	//usart_sync_register_callback(&DEBUG_SERIAL, USART_ASYNC_RXC_CB, usart_rx_cb);
 	usart_sync_enable(&DEBUG_SERIAL);
 }
 
@@ -348,14 +353,20 @@ uint8_t GetIpSwitch(void){
 
 static void TIMER_0_task1_cb(const struct timer_task *const timer_task)
 {
-	
+	adcConversionRequest = 1;
 }
 
 static void TIMER_0_task2_cb(const struct timer_task *const timer_task)
 {
 	gpio_toggle_pin_level(GLD);
+	
 }
 
+uint8_t adcRequest(void){
+	uint8_t retVal = adcConversionRequest;
+	adcConversionRequest = 0;
+	return retVal;
+}
 
 
 static void TIMER_IRQ_init(void)
@@ -364,15 +375,15 @@ static void TIMER_IRQ_init(void)
 	_gclk_enable_channel(RTC_GCLK_ID, CONF_GCLK_RTC_SRC);
 	timer_init(&TIMER_IRQ, RTC, _rtc_get_timer());
 	
-	//TIMER_task1.interval = 100;
-	//TIMER_task1.cb       = TIMER_0_task1_cb;
-	//TIMER_task1.mode     = TIMER_TASK_REPEAT;
+	TIMER_task1.interval = 32768/4;
+	TIMER_task1.cb       = TIMER_0_task1_cb;
+	TIMER_task1.mode     = TIMER_TASK_REPEAT;
 	
 	TIMER_task2.interval = 32768/2;
 	TIMER_task2.cb       = TIMER_0_task2_cb;
 	TIMER_task2.mode     = TIMER_TASK_REPEAT;
 
-	//timer_add_task(&TIMER_IRQ, &TIMER_task1);
+	timer_add_task(&TIMER_IRQ, &TIMER_task1);
 	timer_add_task(&TIMER_IRQ, &TIMER_task2);
 	timer_start(&TIMER_IRQ);
 }

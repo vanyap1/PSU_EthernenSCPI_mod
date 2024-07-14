@@ -66,6 +66,8 @@ hpl\sysctrl\hpl_sysctrl.c
 
 hpl\tc\hpl_tc.c
 
+libs\adc\ADS1x1x.c
+
 libs\driver\hw_driver.c
 
 libs\ethernet\socket.c

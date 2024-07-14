@@ -4,6 +4,7 @@
 #include "socket.h"
 #include "http_parser.h"
 #include "indexPage.h"
+#include "ADS1x1x.h"
 
 #include "stdint.h"
 #include "string.h"
@@ -34,8 +35,8 @@ float amp = 0, volt = 0;
 float ampDMM = 2.15, voltDMM = 14.4;
 uint8_t outState = 2;
 
-
-
+int16_t adcVal[2];
+ADS1x1x_config_t my_adc;
 
 
 uint8_t rx_tx_buff_sizes[]={2,2,2,2,2,2,2,2};
@@ -73,6 +74,12 @@ int main(void)
 		//setSn_IR(HTTP_SOCKET, 0x1F);
 		//
 		
+		ADS1x1x_init(&my_adc,ADS1115,ADS1x1x_I2C_ADDRESS_ADDR_TO_GND,MUX_SINGLE_0,PGA_4096);
+		ADS1x1x_set_threshold_hi(&my_adc, 0xFFFF);
+		ADS1x1x_set_threshold_lo(&my_adc, 0x0000);
+		ADS1x1x_set_comparator_queue(&my_adc,COMPARATOR_QUEUE_1);
+		ADS1x1x_set_data_rate(&my_adc,DATA_RATE_ADS111x_860);
+		ADS1x1x_set_mode(&my_adc,MODE_CONTINUOUS);
 	}
 	buzer(10);
 	while (1) {
@@ -90,10 +97,21 @@ int main(void)
 		//SerialWrite(testBuffer);
 		
 	gpio_set_pin_level(DLDA, !gpio_get_pin_level(ETH_INT));
-	//delay_ms(250);
 	
 	
-	
+	if(adcRequest() == 1){
+		ADS1x1x_set_multiplexer(&my_adc,MUX_SINGLE_0);
+		ADS1x1x_start_conversion(&my_adc);
+		delay_ms(2);
+		adcVal[0] = ADS1x1x_read(&my_adc);
+		
+		ADS1x1x_set_multiplexer(&my_adc,MUX_SINGLE_1);
+		ADS1x1x_start_conversion(&my_adc);
+		delay_ms(2);
+		adcVal[1] = ADS1x1x_read(&my_adc);
+		voltDMM = adcVal[0] * 0.002335539;
+		ampDMM = adcVal[1];
+	}
 	
 	if(getSn_SR(UdpRxSockNum) == SOCK_CLOSED){
 		socket(UdpRxSockNum, Sn_MR_UDP, UdpRxPort, SF_MULTI_ENABLE);
@@ -115,8 +133,8 @@ int main(void)
 		}
 	}
 	
-	
-	for(uint8_t HTTP_SOCKET = 3; HTTP_SOCKET <= 7; HTTP_SOCKET++) {
+	uint8_t HTTP_SOCKET = 3;
+	//for(uint8_t HTTP_SOCKET = 3; HTTP_SOCKET <= 7; HTTP_SOCKET++) {
 		if (getSn_SR(HTTP_SOCKET) == SOCK_ESTABLISHED) {
 			uint8_t rIP[4];
 			getsockopt(HTTP_SOCKET, SO_DESTIP, rIP);
@@ -200,7 +218,7 @@ int main(void)
 			socket(HTTP_SOCKET, Sn_MR_TCP, socketPort[HTTP_SOCKET], 0);
 			listen(HTTP_SOCKET);
 		}
-	}
+	//}
 	
 	
 	

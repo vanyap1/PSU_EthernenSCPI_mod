@@ -171,7 +171,7 @@
 // <i> I2C Bus clock (SCL) speed measured in Hz
 // <id> i2c_master_baud_rate
 #ifndef CONF_SERCOM_2_I2CM_BAUD
-#define CONF_SERCOM_2_I2CM_BAUD 100000
+#define CONF_SERCOM_2_I2CM_BAUD 400000
 #endif
 
 // </h>
@@ -301,7 +301,7 @@
 // <i> The SPI data transfer rate
 // <id> spi_master_baud_rate
 #ifndef CONF_SERCOM_3_SPI_BAUD
-#define CONF_SERCOM_3_SPI_BAUD 50000
+#define CONF_SERCOM_3_SPI_BAUD 6000000
 #endif
 
 // </h>
@@ -476,7 +476,7 @@
 // <i> USART baud rate setting
 // <id> usart_baud_rate
 #ifndef CONF_SERCOM_4_USART_BAUD
-#define CONF_SERCOM_4_USART_BAUD 9600
+#define CONF_SERCOM_4_USART_BAUD 500000
 #endif
 
 // </h>

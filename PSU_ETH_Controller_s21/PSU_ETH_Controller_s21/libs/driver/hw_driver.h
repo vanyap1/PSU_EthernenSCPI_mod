@@ -66,7 +66,7 @@ void EXT_SPI_WriteBuff(uint8_t* buff, uint16_t len);
 
 void EXT_I2C_init(void);
 bool I2C_write_batch(uint8_t addres, uint8_t *data, uint8_t data_len);
-bool I2C_read_batch(uint8_t addres ,uint8_t *data, uint8_t data_len);
+bool I2C_read_batch(uint8_t addres, uint8_t reg ,uint8_t *data, uint8_t data_len);
 bool I2C_read_batch_addr(uint8_t addres, uint8_t reg, uint8_t *data, uint8_t data_len);
 
 void PWM_init(void);
@@ -81,7 +81,7 @@ uint8_t GetIpSwitch(void);
 
 static void TIMER_0_task1_cb(const struct timer_task *const timer_task);
 static void TIMER_0_task2_cb(const struct timer_task *const timer_task);
-
+uint8_t adcRequest(void);
 static void TIMER_IRQ_init(void);
 
 #endif	
