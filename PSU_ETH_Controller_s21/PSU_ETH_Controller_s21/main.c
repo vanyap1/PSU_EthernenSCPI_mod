@@ -34,7 +34,8 @@ uint8_t	 UdpRxSockNum			= 1;
 float amp = 0, volt = 0;
 float ampDMM = 2.15, voltDMM = 14.4;
 uint8_t outState = 2;
-
+uint8_t remoteCtrl = 0;
+uint8_t psuErr = 0;
 int16_t adcVal[2];
 ADS1x1x_config_t my_adc;
 
@@ -165,7 +166,7 @@ int main(void)
 				char *query_string = strstr((char*)TCP_RX_BUF, "GET /set_vals") + strlen("GET /set_vals?");
 				buzer(10);
 				sscanf(query_string, "amp=%f&volt=%f", &amp, &volt);
-				
+				remoteCtrl = 1;
 				// Тут додайте код для встановлення значень ампер, вольт та ват
 				send(HTTP_SOCKET, (uint8_t*)"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{\"success\":true}", 65);
 				} else if (strstr((char*)TCP_RX_BUF, "GET /control") != NULL) {
@@ -183,6 +184,16 @@ int main(void)
 							gpio_set_pin_level(O2, false);
 							gpio_set_pin_level(O3, false);
 					}
+					
+				} else if (strcmp(device, "rem") == 0) {
+					buzer(10);
+					if (strcmp(action, "on") == 0) {
+						remoteCtrl = 1;
+						} else if (strcmp(action, "off") == 0) {
+						remoteCtrl = 0;
+					}
+					gpio_set_pin_level(O1, remoteCtrl);
+					
 				} else if (strcmp(device, "psu") == 0) {
 					buzer(10);
 					if (strcmp(action, "on") == 0) {
@@ -192,6 +203,7 @@ int main(void)
 							outState = 0;
 						// Код для виключення блоку живлення
 					}
+					remoteCtrl = 1;
 				}
 				send(HTTP_SOCKET, (uint8_t*)"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{\"success\":true}", 65);
 				} else if (strstr((char*)TCP_RX_BUF, "GET /get_vals") != NULL) {
@@ -200,7 +212,7 @@ int main(void)
 				char json_response[256];
 				int len = snprintf(json_response, sizeof(json_response),
 				"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n"
-				"{\"amp\":%.2f,\"volt\":%.2f,\"watt\":%.2f,\"ampDMM\":%.2f,\"voltDMM\":%.2f,\"outState\":%d}", amp, volt, watt, ampDMM, voltDMM, outState);  //outState = (0 - disable, 1 - enable, 2 - error)
+				"{\"amp\":%.2f,\"volt\":%.2f,\"watt\":%.2f,\"ampDMM\":%.2f,\"voltDMM\":%.2f,\"outState\":%d ,\"rem\":%d,\"err\":%d,\"in0\":%d,\"in1\":%d,\"in2\":%d }", amp, volt, watt, ampDMM, voltDMM, outState, remoteCtrl, psuErr, 0, 1, 1);  //outState = (0 - disable, 1 - enable, 2 - error)
 
 				send(HTTP_SOCKET, (uint8_t*)json_response, strlen(json_response));
 				
