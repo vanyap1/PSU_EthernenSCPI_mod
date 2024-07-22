@@ -24,7 +24,7 @@ wiz_NetInfo netInfo = { .mac  = {0x20, 0xcf, 0xF0, 0x82, 0x76, 0x00}, // Mac add
 .gw   = {192, 168, 1, 1}, // Gateway address
 .dhcp = NETINFO_STATIC};    //Static IP configuration
 
-uint16_t socketPort[8] = {80, 23, 23, 80, 8080, 8080, 8080, 5000};
+uint16_t socketPort[8] = {80, 23, 23, 80, 80, 80, 80, 80};
 uint8_t  UdpDestAddress[4]		= { 192,168,1,255 };
 uint16_t UdpTxPort			= 3000;
 uint8_t	 UdpTxSockNum			= 0;
@@ -46,9 +46,6 @@ char http_ansver[128]="\0";
 
 int main(void)
 {
-	/* Initializes MCU, drivers and middleware */
-	//atmel_start_init();
-
 	mcu_init();
 	reg_wizchip_cs_cbfunc(W5500_Select, W5500_Unselect);
 	reg_wizchip_spi_cbfunc(W5500_ReadByte, W5500_Write_byte);
@@ -134,8 +131,8 @@ int main(void)
 		}
 	}
 	
-	uint8_t HTTP_SOCKET = 3;
-	//for(uint8_t HTTP_SOCKET = 3; HTTP_SOCKET <= 7; HTTP_SOCKET++) {
+	//uint8_t HTTP_SOCKET = 3;
+	for(uint8_t HTTP_SOCKET = 5; HTTP_SOCKET <= 7; HTTP_SOCKET++) {
 		if (getSn_SR(HTTP_SOCKET) == SOCK_ESTABLISHED) {
 			uint8_t rIP[4];
 			getsockopt(HTTP_SOCKET, SO_DESTIP, rIP);
@@ -146,9 +143,9 @@ int main(void)
 
 			memset(TCP_RX_BUF, 0, sizeof(TCP_RX_BUF));
 			recv(HTTP_SOCKET, (uint8_t*)TCP_RX_BUF, res_size);
-
+			
+			//main page dowload to client handler
 			if (strstr((char*)TCP_RX_BUF, "GET / ") != NULL) {
-				//send(HTTP_SOCKET, (uint8_t*)html_page, strlen(html_page));
 				size_t total_length = strlen(psu_page);
 				size_t sent_length = 0;
 
@@ -158,21 +155,35 @@ int main(void)
 					delay_ms(20);
 					sent_length += chunk_size;
 				}
-				
-				
-				
-				
-				} else if (strstr((char*)TCP_RX_BUF, "GET /set_vals") != NULL) {
+			
+			//favicon handler	
+			} else if (strstr((char*)TCP_RX_BUF, "GET /favicon.ico") != NULL) {
+				send(HTTP_SOCKET, (uint8_t*)"HTTP/1.1 200 OK\r\nContent-Type: image/x-icon\r\n\r\n", 47);
+				send(HTTP_SOCKET, favicon_ico, sizeof(favicon_ico));	
+			
+			//Set nev values	
+			} else if (strstr((char*)TCP_RX_BUF, "GET /set_vals") != NULL) {
 				char *query_string = strstr((char*)TCP_RX_BUF, "GET /set_vals") + strlen("GET /set_vals?");
 				buzer(10);
 				sscanf(query_string, "amp=%f&volt=%f", &amp, &volt);
 				remoteCtrl = 1;
-				// Тут додайте код для встановлення значень ампер, вольт та ват
-				send(HTTP_SOCKET, (uint8_t*)"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{\"success\":true}", 65);
-				} else if (strstr((char*)TCP_RX_BUF, "GET /control") != NULL) {
+				send(HTTP_SOCKET, (uint8_t*)"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{\"success\":true}", 67);
+			
+			//Update values by java-script on the main page
+			} else if (strstr((char*)TCP_RX_BUF, "GET /get_vals") != NULL) {
+			float watt = ampDMM * voltDMM;
+
+			char json_response[256];
+			int len = snprintf(json_response, sizeof(json_response),
+			"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n"
+			"{\"amp\":%.2f,\"volt\":%.2f,\"watt\":%.2f,\"ampDMM\":%.2f,\"voltDMM\":%.2f,\"outState\":%d ,\"rem\":%d,\"err\":%d,\"in0\":%d,\"in1\":%d,\"in2\":%d }", amp, volt, watt, ampDMM, voltDMM, outState, remoteCtrl, psuErr, 0, 1, 1);  //outState = (0 - disable, 1 - enable, 2 - error)
+
+			send(HTTP_SOCKET, (uint8_t*)json_response, strlen(json_response));
+			
+			//GPIO control by javascript or other sources
+			} else if (strstr((char*)TCP_RX_BUF, "GET /control") != NULL) {
 				char *query_string = strstr((char*)TCP_RX_BUF, "GET /control") + strlen("GET /control?");
 				char device[10], action[10];
-				
 				sscanf(query_string, "device=%[^&]&action=%s", device, action);
 
 				if (strcmp(device, "fan") == 0) {
@@ -197,40 +208,28 @@ int main(void)
 				} else if (strcmp(device, "psu") == 0) {
 					buzer(10);
 					if (strcmp(action, "on") == 0) {
-						// Код для включення блоку живлення
 							outState = 1;
 						} else if (strcmp(action, "off") == 0) {
 							outState = 0;
-						// Код для виключення блоку живлення
 					}
 					remoteCtrl = 1;
 				}
-				send(HTTP_SOCKET, (uint8_t*)"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{\"success\":true}", 65);
-				} else if (strstr((char*)TCP_RX_BUF, "GET /get_vals") != NULL) {
-				float watt = ampDMM * voltDMM;
-
-				char json_response[256];
-				int len = snprintf(json_response, sizeof(json_response),
-				"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n"
-				"{\"amp\":%.2f,\"volt\":%.2f,\"watt\":%.2f,\"ampDMM\":%.2f,\"voltDMM\":%.2f,\"outState\":%d ,\"rem\":%d,\"err\":%d,\"in0\":%d,\"in1\":%d,\"in2\":%d }", amp, volt, watt, ampDMM, voltDMM, outState, remoteCtrl, psuErr, 0, 1, 1);  //outState = (0 - disable, 1 - enable, 2 - error)
-
-				send(HTTP_SOCKET, (uint8_t*)json_response, strlen(json_response));
-				
+				send(HTTP_SOCKET, (uint8_t*)"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{\"success\":true}", 65);				
 				}
 
 			disconnect(HTTP_SOCKET);
 			close(HTTP_SOCKET);
 		}
 
-		if (getSn_SR(HTTP_SOCKET) == SOCK_CLOSE_WAIT) {
-			disconnect(HTTP_SOCKET);
-		}
+		//if (getSn_SR(HTTP_SOCKET) == SOCK_CLOSE_WAIT) {
+			//disconnect(HTTP_SOCKET);
+		//}
 
 		if (getSn_SR(HTTP_SOCKET) == SOCK_CLOSED) {
 			socket(HTTP_SOCKET, Sn_MR_TCP, socketPort[HTTP_SOCKET], 0);
 			listen(HTTP_SOCKET);
 		}
-	//}
+	}
 	
 	
 	
