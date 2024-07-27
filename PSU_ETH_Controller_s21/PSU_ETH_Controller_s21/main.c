@@ -13,7 +13,6 @@
 #include <stdlib.h>
 
 
-
 uint8_t *testBuffer 	= "Wiznet Says Hi!\n\r";
 char debugSerialBuffer[256];
 
@@ -31,7 +30,13 @@ uint8_t	 UdpTxSockNum			= 0;
 uint16_t UdpRxPort			= 3001;
 uint8_t	 UdpRxSockNum			= 1;
 
-float amp = 0, volt = 0;
+
+
+
+
+
+
+float amp = 0.5, volt = 3.3;
 float ampDMM = 2.15, voltDMM = 14.4;
 uint8_t outState = 2;
 uint8_t remoteCtrl = 0;
@@ -40,9 +45,9 @@ int16_t adcVal[2];
 ADS1x1x_config_t my_adc;
 
 
-uint8_t rx_tx_buff_sizes[]={2,2,2,2,2,2,2,2};
-	
+uint8_t rx_tx_buff_sizes[]={2,2,2,2,2,2,2,2};	
 char http_ansver[128]="\0";	
+
 
 int main(void)
 {
