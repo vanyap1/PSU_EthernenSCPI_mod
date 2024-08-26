@@ -1,10 +1,10 @@
 /*
- * Code generated from Atmel Start.
- *
- * This file will be overwritten when reconfiguring your Atmel Start project.
- * Please copy examples or other code you want to keep to a separate file
- * to avoid losing it when reconfiguring.
- */
+* Code generated from Atmel Start.
+*
+* This file will be overwritten when reconfiguring your Atmel Start project.
+* Please copy examples or other code you want to keep to a separate file
+* to avoid losing it when reconfiguring.
+*/
 
 #include "driver_init.h"
 #include <peripheral_clk_config.h>
@@ -65,12 +65,12 @@ void EXTERNAL_IRQ_0_init(void)
 	gpio_set_pin_direction(ETH_INT, GPIO_DIRECTION_IN);
 
 	gpio_set_pin_pull_mode(ETH_INT,
-	                       // <y> Pull configuration
-	                       // <id> pad_pull_config
-	                       // <GPIO_PULL_OFF"> Off
-	                       // <GPIO_PULL_UP"> Pull-up
-	                       // <GPIO_PULL_DOWN"> Pull-down
-	                       GPIO_PULL_OFF);
+	// <y> Pull configuration
+	// <id> pad_pull_config
+	// <GPIO_PULL_OFF"> Off
+	// <GPIO_PULL_UP"> Pull-up
+	// <GPIO_PULL_DOWN"> Pull-down
+	GPIO_PULL_OFF);
 
 	gpio_set_pin_function(ETH_INT, PINMUX_PB08A_EIC_EXTINT8);
 
@@ -81,11 +81,11 @@ void SPI_0_PORT_init(void)
 {
 
 	gpio_set_pin_level(MOSI,
-	                   // <y> Initial level
-	                   // <id> pad_initial_level
-	                   // <false"> Low
-	                   // <true"> High
-	                   false);
+	// <y> Initial level
+	// <id> pad_initial_level
+	// <false"> Low
+	// <true"> High
+	false);
 
 	// Set pin direction to output
 	gpio_set_pin_direction(MOSI, GPIO_DIRECTION_OUT);
@@ -93,11 +93,11 @@ void SPI_0_PORT_init(void)
 	gpio_set_pin_function(MOSI, PINMUX_PA04D_SERCOM0_PAD0);
 
 	gpio_set_pin_level(SCK,
-	                   // <y> Initial level
-	                   // <id> pad_initial_level
-	                   // <false"> Low
-	                   // <true"> High
-	                   false);
+	// <y> Initial level
+	// <id> pad_initial_level
+	// <false"> Low
+	// <true"> High
+	false);
 
 	// Set pin direction to output
 	gpio_set_pin_direction(SCK, GPIO_DIRECTION_OUT);
@@ -108,12 +108,12 @@ void SPI_0_PORT_init(void)
 	gpio_set_pin_direction(MISO, GPIO_DIRECTION_IN);
 
 	gpio_set_pin_pull_mode(MISO,
-	                       // <y> Pull configuration
-	                       // <id> pad_pull_config
-	                       // <GPIO_PULL_OFF"> Off
-	                       // <GPIO_PULL_UP"> Pull-up
-	                       // <GPIO_PULL_DOWN"> Pull-down
-	                       GPIO_PULL_OFF);
+	// <y> Pull configuration
+	// <id> pad_pull_config
+	// <GPIO_PULL_OFF"> Off
+	// <GPIO_PULL_UP"> Pull-up
+	// <GPIO_PULL_DOWN"> Pull-down
+	GPIO_PULL_OFF);
 
 	gpio_set_pin_function(MISO, PINMUX_PA06D_SERCOM0_PAD2);
 }
@@ -135,22 +135,22 @@ void I2C_0_PORT_init(void)
 {
 
 	gpio_set_pin_pull_mode(PA12,
-	                       // <y> Pull configuration
-	                       // <id> pad_pull_config
-	                       // <GPIO_PULL_OFF"> Off
-	                       // <GPIO_PULL_UP"> Pull-up
-	                       // <GPIO_PULL_DOWN"> Pull-down
-	                       GPIO_PULL_OFF);
+	// <y> Pull configuration
+	// <id> pad_pull_config
+	// <GPIO_PULL_OFF"> Off
+	// <GPIO_PULL_UP"> Pull-up
+	// <GPIO_PULL_DOWN"> Pull-down
+	GPIO_PULL_OFF);
 
 	gpio_set_pin_function(PA12, PINMUX_PA12C_SERCOM2_PAD0);
 
 	gpio_set_pin_pull_mode(PA13,
-	                       // <y> Pull configuration
-	                       // <id> pad_pull_config
-	                       // <GPIO_PULL_OFF"> Off
-	                       // <GPIO_PULL_UP"> Pull-up
-	                       // <GPIO_PULL_DOWN"> Pull-down
-	                       GPIO_PULL_OFF);
+	// <y> Pull configuration
+	// <id> pad_pull_config
+	// <GPIO_PULL_OFF"> Off
+	// <GPIO_PULL_UP"> Pull-up
+	// <GPIO_PULL_DOWN"> Pull-down
+	GPIO_PULL_OFF);
 
 	gpio_set_pin_function(PA13, PINMUX_PA13C_SERCOM2_PAD1);
 }
@@ -173,11 +173,11 @@ void SPI_1_PORT_init(void)
 {
 
 	gpio_set_pin_level(PA16,
-	                   // <y> Initial level
-	                   // <id> pad_initial_level
-	                   // <false"> Low
-	                   // <true"> High
-	                   false);
+	// <y> Initial level
+	// <id> pad_initial_level
+	// <false"> Low
+	// <true"> High
+	false);
 
 	// Set pin direction to output
 	gpio_set_pin_direction(PA16, GPIO_DIRECTION_OUT);
@@ -185,11 +185,11 @@ void SPI_1_PORT_init(void)
 	gpio_set_pin_function(PA16, PINMUX_PA16D_SERCOM3_PAD0);
 
 	gpio_set_pin_level(PA17,
-	                   // <y> Initial level
-	                   // <id> pad_initial_level
-	                   // <false"> Low
-	                   // <true"> High
-	                   false);
+	// <y> Initial level
+	// <id> pad_initial_level
+	// <false"> Low
+	// <true"> High
+	false);
 
 	// Set pin direction to output
 	gpio_set_pin_direction(PA17, GPIO_DIRECTION_OUT);
@@ -200,12 +200,12 @@ void SPI_1_PORT_init(void)
 	gpio_set_pin_direction(PA18, GPIO_DIRECTION_IN);
 
 	gpio_set_pin_pull_mode(PA18,
-	                       // <y> Pull configuration
-	                       // <id> pad_pull_config
-	                       // <GPIO_PULL_OFF"> Off
-	                       // <GPIO_PULL_UP"> Pull-up
-	                       // <GPIO_PULL_DOWN"> Pull-down
-	                       GPIO_PULL_OFF);
+	// <y> Pull configuration
+	// <id> pad_pull_config
+	// <GPIO_PULL_OFF"> Off
+	// <GPIO_PULL_UP"> Pull-up
+	// <GPIO_PULL_DOWN"> Pull-down
+	GPIO_PULL_OFF);
 
 	gpio_set_pin_function(PA18, PINMUX_PA18D_SERCOM3_PAD2);
 }
@@ -245,10 +245,10 @@ void USART_0_init(void)
 }
 
 /**
- * \brief Timer initialization function
- *
- * Enables Timer peripheral, clocks and initializes Timer driver
- */
+* \brief Timer initialization function
+*
+* Enables Timer peripheral, clocks and initializes Timer driver
+*/
 static void TIMER_0_init(void)
 {
 	_pm_enable_bus_clock(PM_BUS_APBA, RTC);
@@ -301,11 +301,11 @@ void system_init(void)
 	// GPIO on PA07
 
 	gpio_set_pin_level(ETH_CS,
-	                   // <y> Initial level
-	                   // <id> pad_initial_level
-	                   // <false"> Low
-	                   // <true"> High
-	                   true);
+	// <y> Initial level
+	// <id> pad_initial_level
+	// <false"> Low
+	// <true"> High
+	true);
 
 	// Set pin direction to output
 	gpio_set_pin_direction(ETH_CS, GPIO_DIRECTION_OUT);
@@ -315,11 +315,11 @@ void system_init(void)
 	// GPIO on PA08
 
 	gpio_set_pin_level(O2,
-	                   // <y> Initial level
-	                   // <id> pad_initial_level
-	                   // <false"> Low
-	                   // <true"> High
-	                   false);
+	// <y> Initial level
+	// <id> pad_initial_level
+	// <false"> Low
+	// <true"> High
+	false);
 
 	// Set pin direction to output
 	gpio_set_pin_direction(O2, GPIO_DIRECTION_OUT);
@@ -329,11 +329,11 @@ void system_init(void)
 	// GPIO on PA09
 
 	gpio_set_pin_level(O3,
-	                   // <y> Initial level
-	                   // <id> pad_initial_level
-	                   // <false"> Low
-	                   // <true"> High
-	                   false);
+	// <y> Initial level
+	// <id> pad_initial_level
+	// <false"> Low
+	// <true"> High
+	false);
 
 	// Set pin direction to output
 	gpio_set_pin_direction(O3, GPIO_DIRECTION_OUT);
@@ -343,11 +343,11 @@ void system_init(void)
 	// GPIO on PA10
 
 	gpio_set_pin_level(O1,
-	                   // <y> Initial level
-	                   // <id> pad_initial_level
-	                   // <false"> Low
-	                   // <true"> High
-	                   false);
+	// <y> Initial level
+	// <id> pad_initial_level
+	// <false"> Low
+	// <true"> High
+	false);
 
 	// Set pin direction to output
 	gpio_set_pin_direction(O1, GPIO_DIRECTION_OUT);
@@ -360,23 +360,23 @@ void system_init(void)
 	gpio_set_pin_direction(IN3, GPIO_DIRECTION_IN);
 
 	gpio_set_pin_pull_mode(IN3,
-	                       // <y> Pull configuration
-	                       // <id> pad_pull_config
-	                       // <GPIO_PULL_OFF"> Off
-	                       // <GPIO_PULL_UP"> Pull-up
-	                       // <GPIO_PULL_DOWN"> Pull-down
-	                       GPIO_PULL_OFF);
+	// <y> Pull configuration
+	// <id> pad_pull_config
+	// <GPIO_PULL_OFF"> Off
+	// <GPIO_PULL_UP"> Pull-up
+	// <GPIO_PULL_DOWN"> Pull-down
+	GPIO_PULL_OFF);
 
 	gpio_set_pin_function(IN3, GPIO_PIN_FUNCTION_OFF);
 
 	// GPIO on PA15
 
 	gpio_set_pin_level(CS2,
-	                   // <y> Initial level
-	                   // <id> pad_initial_level
-	                   // <false"> Low
-	                   // <true"> High
-	                   true);
+	// <y> Initial level
+	// <id> pad_initial_level
+	// <false"> Low
+	// <true"> High
+	true);
 
 	// Set pin direction to output
 	gpio_set_pin_direction(CS2, GPIO_DIRECTION_OUT);
@@ -386,11 +386,11 @@ void system_init(void)
 	// GPIO on PA23
 
 	gpio_set_pin_level(GLD,
-	                   // <y> Initial level
-	                   // <id> pad_initial_level
-	                   // <false"> Low
-	                   // <true"> High
-	                   false);
+	// <y> Initial level
+	// <id> pad_initial_level
+	// <false"> Low
+	// <true"> High
+	false);
 
 	// Set pin direction to output
 	gpio_set_pin_direction(GLD, GPIO_DIRECTION_OUT);
@@ -400,11 +400,11 @@ void system_init(void)
 	// GPIO on PB09
 
 	gpio_set_pin_level(SPI_RST,
-	                   // <y> Initial level
-	                   // <id> pad_initial_level
-	                   // <false"> Low
-	                   // <true"> High
-	                   false);
+	// <y> Initial level
+	// <id> pad_initial_level
+	// <false"> Low
+	// <true"> High
+	false);
 
 	// Set pin direction to output
 	gpio_set_pin_direction(SPI_RST, GPIO_DIRECTION_OUT);
@@ -417,12 +417,12 @@ void system_init(void)
 	gpio_set_pin_direction(IN2, GPIO_DIRECTION_IN);
 
 	gpio_set_pin_pull_mode(IN2,
-	                       // <y> Pull configuration
-	                       // <id> pad_pull_config
-	                       // <GPIO_PULL_OFF"> Off
-	                       // <GPIO_PULL_UP"> Pull-up
-	                       // <GPIO_PULL_DOWN"> Pull-down
-	                       GPIO_PULL_OFF);
+	// <y> Pull configuration
+	// <id> pad_pull_config
+	// <GPIO_PULL_OFF"> Off
+	// <GPIO_PULL_UP"> Pull-up
+	// <GPIO_PULL_DOWN"> Pull-down
+	GPIO_PULL_OFF);
 
 	gpio_set_pin_function(IN2, GPIO_PIN_FUNCTION_OFF);
 
@@ -432,12 +432,12 @@ void system_init(void)
 	gpio_set_pin_direction(IN1, GPIO_DIRECTION_IN);
 
 	gpio_set_pin_pull_mode(IN1,
-	                       // <y> Pull configuration
-	                       // <id> pad_pull_config
-	                       // <GPIO_PULL_OFF"> Off
-	                       // <GPIO_PULL_UP"> Pull-up
-	                       // <GPIO_PULL_DOWN"> Pull-down
-	                       GPIO_PULL_OFF);
+	// <y> Pull configuration
+	// <id> pad_pull_config
+	// <GPIO_PULL_OFF"> Off
+	// <GPIO_PULL_UP"> Pull-up
+	// <GPIO_PULL_DOWN"> Pull-down
+	GPIO_PULL_OFF);
 
 	gpio_set_pin_function(IN1, GPIO_PIN_FUNCTION_OFF);
 

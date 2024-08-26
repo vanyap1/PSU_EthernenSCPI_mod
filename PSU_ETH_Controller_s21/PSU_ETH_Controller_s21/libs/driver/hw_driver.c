@@ -27,6 +27,10 @@ struct io_descriptor *debug_serial;
 
 uint8_t adcConversionRequest = 0;
 
+static void TIMER_0_task1_cb(const struct timer_task *const timer_task);
+static void TIMER_0_task2_cb(const struct timer_task *const timer_task);
+static void ETH_Handler(void);
+static void TIMER_IRQ_init(void);
 
 void mcu_init(void)
 {
@@ -169,11 +173,17 @@ void ETH_SPI_init(void){
 
 	gpio_set_pin_direction(MISO, GPIO_DIRECTION_IN);
 	gpio_set_pin_pull_mode(MISO, GPIO_PULL_OFF);
-	gpio_set_pin_function(MISO, PINMUX_PA06D_SERCOM0_PAD2);	
+	gpio_set_pin_function(MISO, PINMUX_PA06D_SERCOM0_PAD2);
 	
 	spi_m_sync_init(&ETH_SPI, SERCOM0);
 	spi_m_sync_get_io_descriptor(&ETH_SPI, &eth_spi);
 	spi_m_sync_enable(&ETH_SPI);
+	
+	// GPIO on PA19 SDCARD ENABLE
+	gpio_set_pin_level(SD_CS, true);
+	gpio_set_pin_direction(SD_CS, GPIO_DIRECTION_OUT);
+	gpio_set_pin_function(SD_CS, GPIO_PIN_FUNCTION_OFF);
+	
 }
 
 void ETH_SPI_Select(bool state){
@@ -254,6 +264,18 @@ void EXT_SPI_WriteBuff(uint8_t* buff, uint16_t len){
 	io_write(ext_spi,buff,len);
 }
 
+void EXT_SPI_write_Byte(uint8_t arg){
+	//uint8_t *addr_ptr = &arg;
+	io_write(ext_spi, &arg, 1);
+}
+
+uint8_t EXT_SPI_read_Byte(){
+	uint8_t data_byte = 0;
+	io_read(ext_spi,&data_byte,1);
+	return data_byte;
+}
+
+
 
 void EXT_I2C_init(void){
 	_pm_enable_bus_clock(PM_BUS_APBC, SERCOM2);
@@ -283,6 +305,7 @@ bool I2C_read_batch(uint8_t addres, uint8_t reg ,uint8_t *data, uint8_t data_len
 	i2c_m_sync_set_slaveaddr(&EXT_I2C, addres, I2C_M_SEVEN);
 	i2c_m_sync_cmd_read(&EXT_I2C, reg, data, data_len);
 	//return (io_read(ext_i2c, (uint8_t *)data, data_len) >= 0) ? true : false;
+	return true;
 }
 bool I2C_read_batch_addr(uint8_t addres, uint8_t reg, uint8_t *data, uint8_t data_len){
 	i2c_m_sync_set_slaveaddr(&EXT_I2C, addres, I2C_M_SEVEN);
@@ -310,10 +333,10 @@ void PWM_init(void){
 
 void PWM_write(uint8_t ch, uint16_t val){
 	if(ch == 0){
-		pwm_set_parameters(&PWM_0, 5000, val);	
-	}else{
+		pwm_set_parameters(&PWM_0, 5000, val);
+		}else{
 		pwm_set_parameters(&PWM_1, 5000, val);
-	}	
+	}
 }
 
 void ADC_init(){

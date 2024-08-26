@@ -78,5 +78,9 @@ libs\ethernet\W5500\w5500.c
 
 libs\ethernet\wizchip_conf.c
 
+libs\sdcard\ff.c
+
+libs\sdcard\sdmm.c
+
 main.c
 

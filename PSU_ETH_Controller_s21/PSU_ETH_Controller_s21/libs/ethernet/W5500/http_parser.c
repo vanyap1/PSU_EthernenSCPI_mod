@@ -1,10 +1,10 @@
 
 /*
- * http_parser.c
- *
- * Created: 09.06.2023 13:02:46
- *  Author: princ
- */ 
+* http_parser.c
+*
+* Created: 09.06.2023 13:02:46
+*  Author: princ
+*/
 #include "http_parser.h"
 
 

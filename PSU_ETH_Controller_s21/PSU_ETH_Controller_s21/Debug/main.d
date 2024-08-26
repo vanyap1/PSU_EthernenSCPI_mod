@@ -125,7 +125,8 @@ main.d main.o: .././main.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdlib.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\stdlib.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\alloca.h \
- ../libs/ethernet/W5500/indexPage.h ../libs/adc/ADS1x1x.h
+ ../libs/ethernet/W5500/indexPage.h ../libs/adc/ADS1x1x.h \
+ ../libs/sdcard/ff.h ../libs/sdcard/ffconf.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:
 
@@ -450,3 +451,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../libs/ethernet/W5500/indexPage.h:
 
 ../libs/adc/ADS1x1x.h:
+
+../libs/sdcard/ff.h:
+
+../libs/sdcard/ffconf.h:
