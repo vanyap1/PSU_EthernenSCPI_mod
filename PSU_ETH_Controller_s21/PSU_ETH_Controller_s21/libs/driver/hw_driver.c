@@ -41,7 +41,7 @@ void mcu_init(void)
 	ETH_SPI_init();
 	EXT_SPI_init();
 	EXT_I2C_init();
-	PWM_init();
+	//PWM_init();
 	DEBUG_Serial_init();
 	
 	ext_irq_register(ETH_INT, ETH_Handler);
@@ -61,6 +61,16 @@ void buzer(uint16_t soundTime){
 }
 
 void gpio_init(void){
+	
+	gpio_set_pin_level(PSU_REM, false);
+	gpio_set_pin_direction(PSU_REM, GPIO_DIRECTION_OUT);
+	gpio_set_pin_function(PSU_REM, GPIO_PIN_FUNCTION_OFF);
+	
+	gpio_set_pin_level(PSU_OUT_EN, false);
+	gpio_set_pin_direction(PSU_OUT_EN, GPIO_DIRECTION_OUT);
+	gpio_set_pin_function(PSU_OUT_EN, GPIO_PIN_FUNCTION_OFF);
+	
+	
 	// GPIO on PA07
 	gpio_set_pin_level(ETH_CS, true);
 	gpio_set_pin_direction(ETH_CS, GPIO_DIRECTION_OUT);
@@ -145,6 +155,8 @@ void gpio_init(void){
 	gpio_set_pin_direction(IP_B1, GPIO_DIRECTION_IN);
 	gpio_set_pin_pull_mode(IP_B1, GPIO_PULL_OFF);
 	gpio_set_pin_function(IP_B1, GPIO_PIN_FUNCTION_OFF);
+	
+	
 }
 
 
@@ -297,7 +309,7 @@ void EXT_I2C_init(void){
 
 bool I2C_write_batch(uint8_t addres, uint8_t *data, uint8_t data_len){
 	i2c_m_sync_set_slaveaddr(&EXT_I2C, addres, I2C_M_SEVEN);
-	i2c_m_sync_cmd_write(&EXT_I2C, 0x00, data, data_len);
+	//i2c_m_sync_cmd_write(&EXT_I2C, 0x00, data, data_len);
 	return (io_write(ext_i2c, (uint8_t *)data, data_len) >= 0) ? true : false;
 }
 

@@ -65,6 +65,9 @@
 #define IP_B3 GPIO(GPIO_PORTB, 4)
 
 
+#define PSU_REM GPIO(GPIO_PORTA, 21)
+#define PSU_OUT_EN GPIO(GPIO_PORTB, 17)
+
 
 
 

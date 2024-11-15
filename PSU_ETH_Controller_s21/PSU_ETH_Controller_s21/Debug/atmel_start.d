@@ -1,5 +1,5 @@
 atmel_start.d atmel_start.o: .././atmel_start.c ../atmel_start.h \
- ../driver_init.h ../atmel_start_pins.h ../hal/include/hal_gpio.h \
+ ../driver_init.h ../libs/config/pin_config.h ../hal/include/hal_gpio.h \
  ../hal/include/hpl_gpio.h ../hal/utils/include/compiler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stddef.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdint.h \
@@ -97,7 +97,7 @@ atmel_start.d atmel_start.o: .././atmel_start.c ../atmel_start.h \
 
 ../driver_init.h:
 
-../atmel_start_pins.h:
+../libs/config/pin_config.h:
 
 ../hal/include/hal_gpio.h:
 

@@ -298,6 +298,13 @@ void system_init(void)
 {
 	init_mcu();
 
+	gpio_set_pin_level(PSU_REM, false);
+	gpio_set_pin_direction(PSU_REM, GPIO_DIRECTION_OUT);
+	gpio_set_pin_function(PSU_REM, GPIO_PIN_FUNCTION_OFF);
+	
+	gpio_set_pin_level(PSU_OUT_EN, false);
+	gpio_set_pin_direction(PSU_OUT_EN, GPIO_DIRECTION_OUT);
+	gpio_set_pin_function(PSU_OUT_EN, GPIO_PIN_FUNCTION_OFF);
 	// GPIO on PA07
 
 	gpio_set_pin_level(ETH_CS,
@@ -454,7 +461,7 @@ void system_init(void)
 
 	TIMER_0_init();
 
-	PWM_0_init();
+	//PWM_0_init();
 
-	PWM_1_init();
+	//PWM_1_init();
 }

@@ -8,7 +8,7 @@
 #ifndef DRIVER_INIT_INCLUDED
 #define DRIVER_INIT_INCLUDED
 
-#include "atmel_start_pins.h"
+#include "pin_config.h"
 
 #ifdef __cplusplus
 extern "C" {
