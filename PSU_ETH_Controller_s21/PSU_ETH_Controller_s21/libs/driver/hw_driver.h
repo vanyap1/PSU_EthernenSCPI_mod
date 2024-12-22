@@ -22,7 +22,7 @@ extern "C" {
 	#include <hal_i2c_m_sync.h>
 	#include <hal_spi_m_sync.h>
 
-	#include <hal_usart_sync.h>
+	#include <hal_usart_async.h>
 	#include <hal_timer.h>
 	#include <hal_pwm.h>
 	#include <hpl_tc_base.h>
@@ -32,7 +32,7 @@ extern "C" {
 	extern struct spi_m_sync_descriptor EXT_SPI;
 	extern struct spi_m_sync_descriptor ETH_SPI;
 	extern struct i2c_m_sync_desc EXT_I2C;
-	extern struct usart_sync_descriptor DEBUG_SERIAL;
+	extern struct usart_async_descriptor DEBUG_SERIAL;
 	extern struct timer_descriptor      TIMER_IRQ;
 
 	extern struct pwm_descriptor PWM_0;
@@ -80,6 +80,7 @@ extern "C" {
 
 	void ADC_init(void);
 
+	void my_usart_cb(const struct usart_async_descriptor *const io_descr);
 	void DEBUG_Serial_init(void);
 	void SerialWrite(uint8_t* buff);
 

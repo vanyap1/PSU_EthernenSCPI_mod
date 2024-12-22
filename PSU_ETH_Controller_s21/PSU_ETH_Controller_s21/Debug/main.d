@@ -116,16 +116,18 @@ main.d main.o: .././main.c \
  ../hal/include/hal_spi_m_sync.h ../hal/include/hpl_spi_m_sync.h \
  ../hal/include/hpl_spi.h ../hal/utils/include/utils.h \
  ../hal/include/hpl_spi_sync.h ../hal/include/hal_i2c_m_sync.h \
- ../hal/include/hpl_i2c_m_sync.h ../hal/include/hal_usart_sync.h \
- ../hal/include/hal_io.h ../hal/include/hpl_usart_sync.h \
- ../hal/include/hpl_usart.h ../hal/include/hal_timer.h \
+ ../hal/include/hpl_i2c_m_sync.h ../hal/include/hal_usart_async.h \
+ ../hal/include/hal_io.h ../hal/include/hpl_usart_async.h \
+ ../hal/include/hpl_usart.h ../hal/include/hpl_irq.h \
+ ../hal/utils/include/utils_ringbuffer.h ../hal/utils/include/compiler.h \
+ ../hal/utils/include/utils_assert.h ../hal/include/hal_timer.h \
  ../hal/utils/include/utils_list.h ../hal/include/hpl_timer.h \
  ../hal/include/hal_pwm.h ../hal/include/hpl_pwm.h \
- ../hal/include/hpl_irq.h ../hpl/tc/hpl_tc_base.h \
- ../libs/ethernet/socket.h ../libs/ethernet/wizchip_conf.h \
- ../libs/ethernet/W5500/w5500.h ../libs/ethernet/wizchip_conf.h \
- ../libs/ethernet/W5500/http_parser.h ../libs/ethernet/W5500/indexPage.h \
- ../libs/adc/ADS1x1x.h ../libs/sdcard/ff.h ../libs/sdcard/ffconf.h
+ ../hpl/tc/hpl_tc_base.h ../libs/ethernet/socket.h \
+ ../libs/ethernet/wizchip_conf.h ../libs/ethernet/W5500/w5500.h \
+ ../libs/ethernet/wizchip_conf.h ../libs/ethernet/W5500/http_parser.h \
+ ../libs/ethernet/W5500/indexPage.h ../libs/adc/ADS1x1x.h \
+ ../libs/sdcard/ff.h ../libs/sdcard/ffconf.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:
 
@@ -415,13 +417,21 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD20_DFP\1.3.165\samd20\
 
 ../hal/include/hpl_i2c_m_sync.h:
 
-../hal/include/hal_usart_sync.h:
+../hal/include/hal_usart_async.h:
 
 ../hal/include/hal_io.h:
 
-../hal/include/hpl_usart_sync.h:
+../hal/include/hpl_usart_async.h:
 
 ../hal/include/hpl_usart.h:
+
+../hal/include/hpl_irq.h:
+
+../hal/utils/include/utils_ringbuffer.h:
+
+../hal/utils/include/compiler.h:
+
+../hal/utils/include/utils_assert.h:
 
 ../hal/include/hal_timer.h:
 
@@ -432,8 +442,6 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD20_DFP\1.3.165\samd20\
 ../hal/include/hal_pwm.h:
 
 ../hal/include/hpl_pwm.h:
-
-../hal/include/hpl_irq.h:
 
 ../hpl/tc/hpl_tc_base.h:
 

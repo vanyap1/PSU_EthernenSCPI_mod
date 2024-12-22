@@ -444,9 +444,9 @@ drivers:
           slow_gclk_selection: Generic clock generator 3
   USART_0:
     user_label: USART_0
-    definition: Atmel:SAMD20_Drivers:0.0.1::SAMD20J18A-AN::SERCOM4::driver_config_definition::UART::HAL:Driver:USART.Sync
+    definition: Atmel:SAMD20_Drivers:0.0.1::SAMD20J18A-AN::SERCOM4::driver_config_definition::UART::HAL:Driver:USART.Async
     functionality: USART
-    api: HAL:Driver:USART_Sync
+    api: HAL:Driver:USART_Async
     configuration:
       usart_advanced: false
       usart_arch_clock_mode: USART with internal clock
@@ -455,7 +455,7 @@ drivers:
       usart_arch_ibon: false
       usart_arch_runstdby: false
       usart_arch_sfde: false
-      usart_baud_rate: 9600
+      usart_baud_rate: 115200
       usart_character_size: 8 bits
       usart_parity: No parity
       usart_rx_enable: true

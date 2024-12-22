@@ -44,6 +44,7 @@ ADS1x1x_config_t my_adc;
 
 uint8_t rx_tx_buff_sizes[]={2,2,2,2,2,2,2,2};
 char UdpAnsver[128]="\0";
+uint8_t debugSerialBuffer[128];
 
 //MAX5822 DAC finctional
 #define MAX5822ADDR		0x38
@@ -144,6 +145,7 @@ int main(void)
 		
 		gpio_set_pin_level(DLDA, !gpio_get_pin_level(ETH_INT));
 		
+		/*
 		if(adcRequest() == 1){
 			ADS1x1x_set_multiplexer(&my_adc,MUX_SINGLE_0);
 			ADS1x1x_start_conversion(&my_adc);
@@ -159,6 +161,7 @@ int main(void)
 			ampDMM = ( ampDMM < 0) ?  0 : (ampDMM  * 0.000203718); 
 			
 		}
+		*/
 		
 		if(getSn_SR(UdpRxSockNum) == SOCK_CLOSED){
 			socket(UdpRxSockNum, Sn_MR_UDP, UdpRxPort, SF_MULTI_ENABLE);
@@ -205,6 +208,10 @@ int main(void)
 				uint8_t rIP[4];
 				getsockopt(HTTP_SOCKET, SO_DESTIP, rIP);
 				uint16_t res_size = getSn_RX_RSR(HTTP_SOCKET);
+				
+				//sprintf(debugSerialBuffer, "BUFF LEN=%d", res_size);
+				//SerialWrite(debugSerialBuffer);
+				
 				if (res_size > sizeof(TCP_RX_BUF)) {
 					res_size = sizeof(TCP_RX_BUF);
 				}
@@ -216,7 +223,7 @@ int main(void)
 				if (strstr((char*)TCP_RX_BUF, "GET / ") != NULL) {
 					size_t total_length = strlen(psu_page);
 					size_t sent_length = 0;
-
+					//SerialWrite(TCP_RX_BUF);
 					while (sent_length < total_length) {
 						size_t chunk_size = total_length - sent_length > 1024 ? 1024 : total_length - sent_length;
 						send(HTTP_SOCKET, (uint8_t*)(psu_page + sent_length), chunk_size);
@@ -241,6 +248,7 @@ int main(void)
 					
 					//Update values by java-script on the main page
 					} else if (strstr((char*)TCP_RX_BUF, "GET /get_vals") != NULL) {
+					//SerialWrite(TCP_RX_BUF);	
 					float watt = ampDMM * voltDMM;
 
 					char json_response[256];

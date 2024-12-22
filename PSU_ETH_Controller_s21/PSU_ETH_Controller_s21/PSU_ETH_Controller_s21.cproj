@@ -97,9 +97,11 @@
           <AcmeProjectActionInfo Action="File" Source="hal/utils/include/utils_list.h" IsConfig="false" Hash="60r34J7DkHyqgr2iqa6aXg" />
           <AcmeProjectActionInfo Action="File" Source="hal/utils/include/utils_recursion_macro.h" IsConfig="false" Hash="YGFqEpESap+JD+PQbNlIZw" />
           <AcmeProjectActionInfo Action="File" Source="hal/utils/include/utils_repeat_macro.h" IsConfig="false" Hash="yidXppbw9HriaIIl6gVfEQ" />
+          <AcmeProjectActionInfo Action="File" Source="hal/utils/include/utils_ringbuffer.h" IsConfig="false" Hash="H/Lfgr8Y95zCUmEfoJAavQ" />
           <AcmeProjectActionInfo Action="File" Source="hal/utils/src/utils_assert.c" IsConfig="false" Hash="858+H2i44SFMGhFZ4+PSPw" />
           <AcmeProjectActionInfo Action="File" Source="hal/utils/src/utils_event.c" IsConfig="false" Hash="sR2eRthblYjlO/jHulP6aw" />
           <AcmeProjectActionInfo Action="File" Source="hal/utils/src/utils_list.c" IsConfig="false" Hash="rW6uwWgOnnMWzJjuYzxzZw" />
+          <AcmeProjectActionInfo Action="File" Source="hal/utils/src/utils_ringbuffer.c" IsConfig="false" Hash="MBhQOsuapWaZGq/1E6lcTw" />
           <AcmeProjectActionInfo Action="File" Source="hal/utils/src/utils_syscalls.c" IsConfig="false" Hash="NaBnZufa6Sau3+tzlyR7Kw" />
           <AcmeProjectActionInfo Action="File" Source="hri/hri_ac_d20.h" IsConfig="false" Hash="DPTeFgCH4hPT9mpuWXBm1g" />
           <AcmeProjectActionInfo Action="File" Source="hri/hri_adc_d20.h" IsConfig="false" Hash="FxY9Dd2alOkzqA/OzAMLMg" />
@@ -130,7 +132,7 @@
           <AcmeProjectActionInfo Action="File" Source="hal/include/hal_adc_sync.h" IsConfig="false" Hash="ez1X5T9kpYwT+1+5x4Pxqg" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hal_pwm.h" IsConfig="false" Hash="RXcBZcci/7vXKRJKNIq/Kw" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hal_timer.h" IsConfig="false" Hash="5pZVthtMl40VMvofOld2ng" />
-          <AcmeProjectActionInfo Action="File" Source="hal/include/hal_usart_sync.h" IsConfig="false" Hash="ZzIGSRyjZuxRzFAtNNt7sw" />
+          <AcmeProjectActionInfo Action="File" Source="hal/include/hal_usart_async.h" IsConfig="false" Hash="km9RyrLcCSavva/oZ2rcOQ" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_adc_async.h" IsConfig="false" Hash="kKbVmqgGDUkuWZYErBwgVA" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_adc_sync.h" IsConfig="false" Hash="dCWrizZn0RtcCM73jZ/k6A" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_calendar.h" IsConfig="false" Hash="58uU8QaNqMOXYXdVNCAzAw" />
@@ -150,7 +152,7 @@
           <AcmeProjectActionInfo Action="File" Source="hal/src/hal_pwm.c" IsConfig="false" Hash="ZFJmg7/0rhQ6JMKyxuk9kw" />
           <AcmeProjectActionInfo Action="File" Source="hal/src/hal_spi_m_sync.c" IsConfig="false" Hash="Q0IudnTEWeoIkfQIoYIqxA" />
           <AcmeProjectActionInfo Action="File" Source="hal/src/hal_timer.c" IsConfig="false" Hash="F2MrEXhHq4umI9xpONnlGg" />
-          <AcmeProjectActionInfo Action="File" Source="hal/src/hal_usart_sync.c" IsConfig="false" Hash="VBVlAmBFEYTTUMHeIRFSxg" />
+          <AcmeProjectActionInfo Action="File" Source="hal/src/hal_usart_async.c" IsConfig="false" Hash="1BPdzHEU8u472rtyf6cIdg" />
           <AcmeProjectActionInfo Action="File" Source="hal/utils/include/parts.h" IsConfig="false" Hash="MfoGayz0XcEKPI59BfKE4Q" />
           <AcmeProjectActionInfo Action="File" Source="hpl/adc/hpl_adc.c" IsConfig="false" Hash="n3W3Y8dfMdyntJXO2X8GeQ" />
           <AcmeProjectActionInfo Action="File" Source="hpl/adc/hpl_adc_base.h" IsConfig="false" Hash="19A6ERNtsVVhqvnpGbR3Lg" />
@@ -320,6 +322,8 @@
       <Value>../libs/driver</Value>
       <Value>../libs/ethernet</Value>
       <Value>../libs/ethernet/W5500</Value>
+      <Value>../libs/adc</Value>
+      <Value>../libs/sdcard</Value>
       <Value>../Config</Value>
       <Value>../</Value>
       <Value>../examples</Value>
@@ -337,8 +341,6 @@
       <Value>../hpl/tc</Value>
       <Value>../hri</Value>
       <Value>%24(PackRepoDir)\atmel\SAMD20_DFP\1.3.165\samd20\include</Value>
-      <Value>../libs/adc</Value>
-      <Value>../libs/sdcard</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize debugging experience (-Og)</armgcc.compiler.optimization.level>
@@ -505,6 +507,9 @@
     <Compile Include="hal\include\hal_timer.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="hal\include\hal_usart_async.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="hal\include\hal_usart_sync.h">
       <SubType>compile</SubType>
     </Compile>
@@ -640,6 +645,9 @@
     <Compile Include="hal\src\hal_timer.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="hal\src\hal_usart_async.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="hal\src\hal_usart_sync.c">
       <SubType>compile</SubType>
     </Compile>
@@ -679,6 +687,9 @@
     <Compile Include="hal\utils\include\utils_repeat_macro.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="hal\utils\include\utils_ringbuffer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="hal\utils\src\utils_assert.c">
       <SubType>compile</SubType>
     </Compile>
@@ -686,6 +697,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="hal\utils\src\utils_list.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hal\utils\src\utils_ringbuffer.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="hal\utils\src\utils_syscalls.c">
@@ -919,7 +933,7 @@
     <None Include="hal\documentation\timer.rst">
       <SubType>compile</SubType>
     </None>
-    <None Include="hal\documentation\usart_sync.rst">
+    <None Include="hal\documentation\usart_async.rst">
       <SubType>compile</SubType>
     </None>
   </ItemGroup>
