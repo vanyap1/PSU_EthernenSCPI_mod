@@ -43,7 +43,8 @@ extern "C" {
 	extern struct pwm_descriptor PWM_0;
 	extern struct pwm_descriptor PWM_1;
 
-
+	uint8_t debugSerialBuffer[192];
+	uint8_t uartRxBuff[192];
 
 	void mcu_init(void);
 

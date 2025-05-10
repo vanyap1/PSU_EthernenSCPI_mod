@@ -70,11 +70,23 @@ hpl\tc\hpl_tc.c
 
 libs\adc\ADS1x1x.c
 
+libs\ColorLCD\font16.c
+
+libs\ColorLCD\GUI_Paint.c
+
+libs\ColorLCD\image.c
+
+libs\ColorLCD\LCD_1inch28.c
+
+libs\ColorLCD\OLED_1in5_rgb.c
+
 libs\driver\hw_driver.c
 
-libs\ethernet\socket.c
+libs\ethernet\http_parser.c
 
-libs\ethernet\W5500\http_parser.c
+libs\ethernet\netHandler.c
+
+libs\ethernet\socket.c
 
 libs\ethernet\W5500\w5500.c
 

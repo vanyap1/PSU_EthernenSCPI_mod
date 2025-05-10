@@ -1,0 +1,41 @@
+/*
+ * HowToUse.txt
+ *
+ * Created: 29.12.2024 21:56:05
+ *  Author: Ivan Prints
+ */ 
+
+
+IPS - 
+	#include "LCD_1in28.h"
+	#include "image.h"
+	#include "GUI_Paint.h"
+
+	LCD_1IN28_Init(VERTICAL);
+	LCD_1IN28_Clear(BLACK);
+	Paint_NewImage(LCD_1IN28_WIDTH, LCD_1IN28_HEIGHT, 0, BLACK);
+	Paint_SetClearFuntion(LCD_1IN28_Clear);
+	Paint_SetDisplayFuntion(LCD_1IN28_DrawPaint);
+
+OLED - 
+	#include "OLED_1in5_rgb.h"
+	#include "image.h"
+	#include "GUI_Paint.h"
+
+	OLED_1in5_rgb_Init();												//Init Hardware
+	OLED_1in5_rgb_Clear(BLACK);											//Fill screen
+
+	Paint_NewImage(OLED_1in5_RGB_WIDTH,OLED_1in5_RGB_HEIGHT, 0, BLACK);	//Init library
+	Paint_SetClearFuntion(OLED_1in5_rgb_Clear);
+	Paint_SetDisplayFuntion(OLED_1in5_DrawPaint);
+
+
+
+Common functions - 
+
+	Paint_DrawString_EN(0, 10, &lcdStr ,&Font16,  BLACK, RED);
+	Paint_DrawString_EN(0, 25, &lcdStr ,&Font16,  BLACK, GREEN);
+	Paint_DrawString_EN(0, 40, &lcdStr ,&Font16,  BLACK, BLUE);
+	Paint_DrawString_EN(0, 55, &lcdStr ,&Font16,  BLACK, YELLOW);
+	Paint_DrawImage(gImage_70X70, 85, 25, 70, 70);
+	LCD_1IN28_DisplayWindows(100, 100, 100+70, 100+70, gImage_70X70);

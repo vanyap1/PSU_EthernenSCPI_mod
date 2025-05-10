@@ -125,9 +125,10 @@ main.d main.o: .././main.c \
  ../hal/include/hal_pwm.h ../hal/include/hpl_pwm.h \
  ../hpl/tc/hpl_tc_base.h ../libs/ethernet/socket.h \
  ../libs/ethernet/wizchip_conf.h ../libs/ethernet/W5500/w5500.h \
- ../libs/ethernet/wizchip_conf.h ../libs/ethernet/W5500/http_parser.h \
- ../libs/ethernet/W5500/indexPage.h ../libs/adc/ADS1x1x.h \
- ../libs/sdcard/sdApp.h ../libs/sdcard/ff.h ../libs/sdcard/ffconf.h
+ ../libs/ethernet/wizchip_conf.h ../libs/adc/ADS1x1x.h \
+ ../libs/sdcard/sdApp.h ../libs/sdcard/ff.h ../libs/sdcard/ffconf.h \
+ ../libs/ethernet/netHandler.h ../libs/ColorLCD/OLED_1in5_rgb.h \
+ ../libs/ColorLCD/GUI_Paint.h ../libs/ColorLCD/fonts.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:
 
@@ -453,10 +454,6 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD20_DFP\1.3.165\samd20\
 
 ../libs/ethernet/wizchip_conf.h:
 
-../libs/ethernet/W5500/http_parser.h:
-
-../libs/ethernet/W5500/indexPage.h:
-
 ../libs/adc/ADS1x1x.h:
 
 ../libs/sdcard/sdApp.h:
@@ -464,3 +461,11 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD20_DFP\1.3.165\samd20\
 ../libs/sdcard/ff.h:
 
 ../libs/sdcard/ffconf.h:
+
+../libs/ethernet/netHandler.h:
+
+../libs/ColorLCD/OLED_1in5_rgb.h:
+
+../libs/ColorLCD/GUI_Paint.h:
+
+../libs/ColorLCD/fonts.h:

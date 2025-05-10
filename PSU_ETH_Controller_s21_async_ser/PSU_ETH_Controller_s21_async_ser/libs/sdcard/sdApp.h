@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#define SD_BUFFER_SIZE 512
 
 bool sd_init(void);
 

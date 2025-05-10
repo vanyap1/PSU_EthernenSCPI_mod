@@ -118,7 +118,7 @@ void gpio_init(void){
 	gpio_set_pin_level(CS2, true);
 	gpio_set_pin_direction(CS2, GPIO_DIRECTION_OUT);
 	gpio_set_pin_function(CS2, GPIO_PIN_FUNCTION_OFF);
-
+	
 	// GPIO on PA23
 	gpio_set_pin_level(GLD, false);
 	gpio_set_pin_direction(GLD, GPIO_DIRECTION_OUT);
@@ -174,6 +174,23 @@ void gpio_init(void){
 	gpio_set_pin_pull_mode(IP_B1, GPIO_PULL_OFF);
 	gpio_set_pin_function(IP_B1, GPIO_PIN_FUNCTION_OFF);
 	
+	
+	//LCD Pin init
+	
+	// LCD CS
+	gpio_set_pin_level(LCD_CS, true);
+	gpio_set_pin_direction(LCD_CS, GPIO_DIRECTION_OUT);
+	gpio_set_pin_function(LCD_CS, GPIO_PIN_FUNCTION_OFF);
+	
+	// LCD DC
+	gpio_set_pin_level(LCD_DC, true);
+	gpio_set_pin_direction(LCD_DC, GPIO_DIRECTION_OUT);
+	gpio_set_pin_function(LCD_DC, GPIO_PIN_FUNCTION_OFF);
+	
+	// LCD Reset
+	gpio_set_pin_level(LCD_RST, true);
+	gpio_set_pin_direction(LCD_RST, GPIO_DIRECTION_OUT);
+	gpio_set_pin_function(LCD_RST, GPIO_PIN_FUNCTION_OFF);
 	
 }
 

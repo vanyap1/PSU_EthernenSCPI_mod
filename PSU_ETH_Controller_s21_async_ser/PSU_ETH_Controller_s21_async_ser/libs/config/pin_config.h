@@ -69,6 +69,13 @@
 #define PSU_OUT_EN GPIO(GPIO_PORTB, 17)
 
 
+//LCD pin defination
+
+#define LCD_CS GPIO(GPIO_PORTA, 15)
+#define LCD_RST GPIO(GPIO_PORTA, 19)
+#define LCD_DC GPIO(GPIO_PORTB, 16)
+ 
+
 
 
 #endif // ATMEL_START_PINS_H_INCLUDED
