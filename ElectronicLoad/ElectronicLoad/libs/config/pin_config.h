@@ -1,0 +1,81 @@
+#ifndef PIN_CONFIG_H_INCLUDED
+#define PIN_CONFIG_H_INCLUDED
+
+#include <hal_gpio.h>
+
+// SAMD21 has 8 pin functions
+
+
+
+
+// SAMD20 has 8 pin functions
+
+#define GPIO_PIN_FUNCTION_A 0
+#define GPIO_PIN_FUNCTION_B 1
+#define GPIO_PIN_FUNCTION_C 2
+#define GPIO_PIN_FUNCTION_D 3
+#define GPIO_PIN_FUNCTION_E 4
+#define GPIO_PIN_FUNCTION_F 5
+#define GPIO_PIN_FUNCTION_G 6
+#define GPIO_PIN_FUNCTION_H 7
+
+#define PA02 GPIO(GPIO_PORTA, 2)
+#define PA03 GPIO(GPIO_PORTA, 3)
+#define MOSI GPIO(GPIO_PORTA, 4)
+#define SCK GPIO(GPIO_PORTA, 5)
+#define MISO GPIO(GPIO_PORTA, 6)
+#define ETH_CS GPIO(GPIO_PORTA, 7)
+
+#define PA12 GPIO(GPIO_PORTA, 12)
+#define PA13 GPIO(GPIO_PORTA, 13)
+#define CS2 GPIO(GPIO_PORTA, 15)
+#define PA16 GPIO(GPIO_PORTA, 16)
+#define PA17 GPIO(GPIO_PORTA, 17)
+#define PA18 GPIO(GPIO_PORTA, 18)
+#define SD_CS GPIO(GPIO_PORTA, 19)
+
+
+#define PA21 GPIO(GPIO_PORTA, 21)
+#define ETH_INT GPIO(GPIO_PORTB, 8)
+#define SPI_RST GPIO(GPIO_PORTB, 9)
+
+#define O2 GPIO(GPIO_PORTA, 8)
+#define O3 GPIO(GPIO_PORTA, 9)
+#define O1 GPIO(GPIO_PORTA, 10)
+
+#define IN3 GPIO(GPIO_PORTA, 11)
+#define IN2 GPIO(GPIO_PORTB, 10)
+#define IN1 GPIO(GPIO_PORTB, 11)
+
+#define PB12 GPIO(GPIO_PORTB, 12)
+#define PB14 GPIO(GPIO_PORTB, 14)
+#define PB17 GPIO(GPIO_PORTB, 17)
+
+#define BZ GPIO(GPIO_PORTA, 25)
+
+#define DLDA GPIO(GPIO_PORTA, 22)
+#define DLDC GPIO(GPIO_PORTA, 24)
+
+#define GLD GPIO(GPIO_PORTA, 23)
+
+//IP select switch
+#define IP_B0 GPIO(GPIO_PORTB, 5)
+#define IP_B1 GPIO(GPIO_PORTB, 7)
+#define IP_B2 GPIO(GPIO_PORTB, 6)
+#define IP_B3 GPIO(GPIO_PORTB, 4)
+
+
+#define PSU_REM GPIO(GPIO_PORTA, 21)
+#define PSU_OUT_EN GPIO(GPIO_PORTB, 17)
+
+
+//ADC_DAC board pin defination
+
+#define REM GPIO(GPIO_PORTA, 19)
+
+
+//
+
+
+
+#endif // ATMEL_START_PINS_H_INCLUDED

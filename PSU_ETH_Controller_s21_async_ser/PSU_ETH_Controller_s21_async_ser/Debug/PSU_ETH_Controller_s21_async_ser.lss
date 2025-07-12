@@ -31,7 +31,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  13 .debug_line   0001a70a  00000000  00000000  000cfc99  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_str    00064561  00000000  00000000  000ea3a3  2**0
+ 14 .debug_str    00064560  00000000  00000000  000ea3a3  2**0
                   CONTENTS, READONLY, DEBUGGING
  15 .debug_frame  0000502c  00000000  00000000  0014e904  2**2
                   CONTENTS, READONLY, DEBUGGING
@@ -3136,7 +3136,7 @@ static void _sercom_init_irq_param(const void *const hw, void *dev)
      fc4:	bdfff800 	.word	0xbdfff800
      fc8:	0000024e 	.word	0x0000024e
      fcc:	40010004 	.word	0x40010004
-     fd0:	ffffd555 	.word	0xffffd555
+     fd0:	fffffe5c 	.word	0xfffffe5c
      fd4:	42001800 	.word	0x42001800
      fd8:	e000e100 	.word	0xe000e100
      fdc:	20000a6c 	.word	0x20000a6c
